@@ -1,0 +1,44 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "events": {
+      "type": "events",
+      "blocks": {
+        "b1": {
+          "type": "event_type",
+          "settings": {
+            "eyebrow": "Cerimonie",
+            "title": "Matrimoni & anniversari",
+            "text": "<p>La torta del vostro giorno più importante merita la massima cura. Lavoriamo con voi per creare qualcosa di unico e indimenticabile.</p>",
+            "cta_label": "Prenota una consulenza"
+          }
+        },
+        "b2": {
+          "type": "event_type",
+          "settings": {
+            "eyebrow": "Festeggiamenti",
+            "title": "Compleanni & ricorrenze",
+            "text": "<p>Dolci su misura per ogni età e ogni occasione. Torte a piani, monoporzioni, macarons e buffet dolci personalizzati.</p>",
+            "cta_label": "Scopri le opzioni"
+          }
+        }
+      },
+      "settings": {
+        "eyebrow": "Eventi privati",
+        "hero_title": "Celebra con noi",
+        "hero_subtitle": "Torte su misura, buffet dolci e degustazioni per matrimoni, compleanni e ricorrenze speciali."
+      }
+    }
+  },
+  "order": [
+    "events"
+  ]
+}

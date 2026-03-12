@@ -1,0 +1,243 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin language editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "404": {
+    "title": "404",
+    "not_found": "Pagina non trovata.",
+    "back_to_shopping": "Torna agli acquisti"
+  },
+  "blog": {
+    "article_comments": "Commenti",
+    "article_metadata_html": "{{ date }} di {{ author }}",
+    "comment_form_body": "Commento",
+    "comment_form_email": "Email",
+    "comment_form_name": "Nome",
+    "comment_form_submit": "Pubblica",
+    "comment_form_title": "Aggiungi un commento"
+  },
+  "cart": {
+    "checkout": "Procedi al checkout",
+    "title": "Il tuo carrello",
+    "update": "Aggiorna carrello",
+    "remove": "Elimina",
+    "order_summary": "Riepilogo ordine",
+    "subtotal": "Subtotale",
+    "shipping_note": "Tasse e spedizione calcolate al checkout",
+    "empty": "Il tuo carrello è vuoto",
+    "empty_description": "Scopri le nostre creazioni artigianali e aggiungi qualcosa di speciale.",
+    "item_count_one": "{{ count }} articolo",
+    "item_count_other": "{{ count }} articoli",
+    "general": {
+      "title": "Carrello",
+      "items": "articoli"
+    }
+  },
+  "customers": {
+    "login": {
+      "email": "Email",
+      "password": "Password",
+      "submit": "Accedi",
+      "title": "Accedi"
+    }
+  },
+  "collections": {
+    "title": "Collezioni"
+  },
+  "collection": {
+    "eyebrow": "I nostri prodotti",
+    "all": "Tutti",
+    "sort": "Ordina per",
+    "empty": "Nessun prodotto trovato in questa collezione."
+  },
+  "gift_card": {
+    "add_to_apple_wallet": "Aggiungi a Apple Wallet",
+    "card": "Carta regalo",
+    "expired": "Questa carta regalo è scaduta",
+    "expires_on": "Scade il {{ expires_on }}",
+    "use_at_checkout": "Usa questa carta regalo al pagamento"
+  },
+  "password": {
+    "title": "Questo negozio è privato",
+    "password": "Password",
+    "enter": "Accedi"
+  },
+  "search": {
+    "title": "Ricerca",
+    "placeholder": "Cerca prodotti, pagine…",
+    "submit": "Cerca",
+    "no_results_html": "Nessun risultato trovato per {{ terms }}",
+    "results_for_html": "{{ count }} risultati trovati per {{ terms }}"
+  },
+  "general": {
+    "view_all": "Visualizza tutto",
+    "continue_shopping": "Continua lo shopping",
+    "menu": "Menu",
+    "close": "Chiudi",
+    "search": {
+      "placeholder": "Cerca"
+    },
+    "accessibility": {
+      "menu": "Apri menu",
+      "close": "Chiudi menu",
+      "mobile_nav": "Navigazione mobile",
+      "nav_left": "Navigazione principale",
+      "nav_right": "Navigazione secondaria",
+      "skip_to_content": "Vai al contenuto",
+      "account": "Il mio account",
+      "prev_slide": "Slide precedente",
+      "next_slide": "Slide successiva",
+      "go_to_slide": "Vai alla slide {{ index }}"
+    }
+  },
+  "sections": {
+    "header": { "name": "Intestazione" },
+    "footer": { "name": "Piè di pagina" },
+    "hero": { "name": "Banner hero" },
+    "featured_collection": { "name": "Collezione in evidenza" },
+    "story": { "name": "Storia del brand" },
+    "services": { "name": "Griglia servizi" },
+    "newsletter": { "name": "Newsletter" },
+    "catering": { "name": "Catering" },
+    "events": { "name": "Eventi" },
+    "booking": { "name": "Prenotazioni" },
+    "product": { "name": "Prodotto" },
+    "product_grid": { "name": "Griglia prodotti" },
+    "product_recommendations": {
+      "name": "Prodotti consigliati",
+      "title": "Potrebbe interessarti anche"
+    }
+  },
+  "blocks": {
+    "slide": { "name": "Slide" },
+    "service": { "name": "Card servizio" },
+    "highlight": { "name": "Statistica" },
+    "event_type": { "name": "Tipo evento" },
+    "product_feature": { "name": "Punto di valore" }
+  },
+  "labels": {
+    "logo": "Logo",
+    "tagline": "Slogan",
+    "menu_left": "Menu sinistro",
+    "menu_right": "Menu destro",
+    "menu_shop": "Menu shop",
+    "menu_services": "Menu servizi",
+    "menu_legal": "Menu legale",
+    "description": "Descrizione",
+    "address": "Indirizzo",
+    "phone": "Telefono",
+    "email": "Email",
+    "instagram": "URL Instagram",
+    "facebook": "URL Facebook",
+    "image": "Immagine",
+    "eyebrow": "Sopratitolo",
+    "title": "Titolo",
+    "subtitle": "Sottotitolo",
+    "text": "Testo",
+    "cta_label": "Testo pulsante",
+    "cta_url": "URL pulsante",
+    "link": "URL link",
+    "show_scroll": "Mostra indicatore scroll",
+    "overlay_opacity": "Opacità overlay",
+    "collection": "Collezione",
+    "products_count": "Numero prodotti",
+    "columns": "Colonne",
+    "background": "Sfondo",
+    "show_cta": "Mostra pulsante CTA",
+    "image_position": "Posizione immagine",
+    "signature": "Firma",
+    "email_placeholder": "Placeholder email",
+    "button": "Testo pulsante",
+    "privacy_note": "Nota privacy",
+    "show_filters": "Mostra filtri",
+    "hours": "Orari di apertura",
+    "number": "Numero/Statistica",
+    "label": "Etichetta",
+    "logo_max_width": "Larghezza massima logo",
+    "sticky_header": "Header fisso (sticky)",
+    "show_search": "Mostra icona ricerca",
+    "show_account": "Mostra icona account",
+    "privacy_label": "Testo checkbox privacy",
+    "privacy_label_info": "Scrivi \"Privacy Policy\" nel testo per collegarlo automaticamente alla pagina impostata sotto",
+    "privacy_url": "URL pagina Privacy Policy",
+    "icon": "Icona (emoji o simbolo)",
+    "icon_info": "Incolla un'emoji o un simbolo, es. ✦ ★ 🌿",
+    "max_height": "Altezza massima",
+    "autoplay": "Riproduzione automatica",
+    "autoplay_speed": "Velocità riproduzione automatica",
+    "show_dots": "Mostra navigazione a punti",
+    "show_arrows": "Mostra frecce"
+  },
+  "options": {
+    "white": "Bianco",
+    "soft": "Beige chiaro",
+    "left": "Sinistra",
+    "right": "Destra"
+  },
+  "headers": {
+    "hero": "Sezione hero",
+    "content": "Sezione contenuto",
+    "logo": "Logo",
+    "navigation": "Navigazione",
+    "behaviour": "Comportamento"
+  },
+  "footer": {
+    "shop": "Shop",
+    "services": "Servizi",
+    "contact": "Contatti",
+    "rights": "Tutti i diritti riservati."
+  },
+  "newsletter": {
+    "email": "Indirizzo email",
+    "success": "Iscritto!",
+    "privacy_label": "Ho letto e accetto la Privacy Policy"
+  },
+  "booking": {
+    "name": "Nome e cognome",
+    "email": "Indirizzo email",
+    "phone": "Numero di telefono",
+    "date": "Data evento",
+    "event_type": "Tipo di evento",
+    "select": "Seleziona",
+    "wedding": "Matrimonio",
+    "birthday": "Compleanno",
+    "catering": "Catering",
+    "corporate": "Evento aziendale",
+    "other": "Altro",
+    "message": "Messaggio",
+    "message_placeholder": "Raccontaci il tuo evento…",
+    "hours": "Orari di apertura",
+    "address": "Dove trovarci"
+  },
+  "products": {
+    "product": "Prodotto",
+    "sale": "Offerta"
+  },
+  "product": {
+    "add_to_cart": "Aggiungi al carrello",
+    "sold_out": "Non disponibile",
+    "added": "Aggiunto!",
+    "view": "Vedi prodotto",
+    "sale": "Offerta",
+    "new": "Nuovo",
+    "type": "Tipo",
+    "brand": "Marca",
+    "tags": "Tag",
+    "quantity": "Quantità",
+    "quantity_minus": "Diminuisci quantità",
+    "quantity_plus": "Aumenta quantità",
+    "allergens": {
+      "ingredients_title": "Ingredienti",
+      "allergens_title": "Allergeni",
+      "contains": "Questo prodotto contiene i seguenti allergeni:",
+      "may_contain": "Può contenere tracce di",
+      "disclaimer": "Verificare sempre l'etichetta prima del consumo. Le informazioni possono variare in base al lotto di produzione."
+    }
+  }
+}

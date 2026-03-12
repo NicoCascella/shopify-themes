@@ -1,0 +1,456 @@
+{% doc %}
+  Renders the detail page of a single service from metaobjects.
+  Shows featured image, description, and full gallery.
+
+  @example
+  {% section 'service-detail' %}
+{% enddoc %}
+
+{% liquid
+  assign service_slug = request.query.service | default: ""
+  assign current_service = nil
+
+  if service_slug != ""
+    for service in metaobjects.service.values
+      if service.slug == service_slug
+        assign current_service = service
+        break
+      endif
+    endfor
+  endif
+%}
+
+<section class="service-detail" {{ section.shopify_attributes }}>
+  {% if current_service %}
+    <div class="service-detail__container">
+      <!-- Back Link -->
+      <a href="/services" class="service-detail__back">
+        ← {{ section.settings.back_text }}
+      </a>
+
+      <div class="service-detail__grid">
+        <!-- Main Image -->
+        <div class="service-detail__image-section">
+          {% if current_service.image %}
+            <div class="service-detail__main-image">
+              <img
+                src="{{ current_service.image | image_url: width: 800, height: 600 }}"
+                alt="{{ current_service.name }}"
+                class="service-detail__image"
+                loading="eager"
+              >
+            </div>
+          {% endif %}
+
+          <!-- Gallery Thumbnails -->
+          {% if current_service.gallery and current_service.gallery.size > 0 %}
+            <div class="service-detail__gallery-thumbnails">
+              {% for file in current_service.gallery %}
+                {% if file.image %}
+                  <img
+                    src="{{ file.image | image_url: width: 300, height: 300, crop: 'center' }}"
+                    data-full="{{ file.image | image_url: width: 1400 }}"
+                    alt="{{ current_service.name }} - foto {{ forloop.index }}"
+                    class="service-detail__thumbnail"
+                    loading="lazy"
+                    data-gallery-index="{{ forloop.index0 }}"
+                  >
+                {% endif %}
+              {% endfor %}
+            </div>
+          {% endif %}
+        </div>
+
+        <!-- Content -->
+        <div class="service-detail__content">
+          <h1 class="service-detail__title">{{ current_service.name }}</h1>
+
+          <div class="service-detail__description">
+            {{ current_service.description | metafield_text }}
+          </div>
+
+          <!-- Gallery Info -->
+          {% if current_service.gallery and current_service.gallery.size > 0 %}
+            <div class="service-detail__gallery-info">
+              <p class="service-detail__gallery-count">
+                📸 {{ current_service.gallery.size }} {% if current_service.gallery.size == 1 %}foto disponibile{% else %}foto disponibili{% endif %}
+              </p>
+            </div>
+          {% endif %}
+
+          <!-- CTA -->
+          <div class="service-detail__cta">
+            <a href="#contact" class="button button--primary">
+              {{ section.settings.contact_text }}
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Full Gallery Modal -->
+    {% if current_service.gallery and current_service.gallery.size > 0 %}
+      <div class="service-detail__gallery-modal" data-gallery-modal hidden>
+        <button class="service-detail__gallery-close" data-gallery-close aria-label="Close">
+          {% render 'svg-icon', name: 'close' %}
+        </button>
+
+        <div class="service-detail__gallery-lightbox">
+          <img class="service-detail__gallery-image" src="" alt="" data-gallery-image>
+          <button class="service-detail__gallery-prev" data-gallery-prev>❮</button>
+          <button class="service-detail__gallery-next" data-gallery-next>❯</button>
+        </div>
+      </div>
+    {% endif %}
+  {% else %}
+    <!-- Service Not Found -->
+    <div class="service-detail__empty">
+      <h2>{{ section.settings.not_found_title }}</h2>
+      <p>{{ section.settings.not_found_text }}</p>
+      <a href="/services" class="button button--primary">
+        {{ section.settings.back_text }}
+      </a>
+    </div>
+  {% endif %}
+</section>
+
+{% stylesheet %}
+  .service-detail {
+    width: 100%;
+    padding: var(--spacing-2xl) var(--spacing-lg);
+    background: var(--color-cream);
+    min-height: 100vh;
+  }
+
+  .service-detail__container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .service-detail__back {
+    display: inline-block;
+    color: var(--color-cacao);
+    text-decoration: none;
+    font-weight: 600;
+    margin-bottom: var(--spacing-xl);
+    transition: color var(--transition-base);
+  }
+
+  .service-detail__back:hover {
+    color: var(--color-gold);
+  }
+
+  .service-detail__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-2xl);
+    background: var(--color-white);
+    border-radius: var(--border-radius-lg);
+    padding: var(--spacing-2xl);
+    box-shadow: var(--shadow-md);
+  }
+
+  .service-detail__image-section {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+  }
+
+  .service-detail__main-image {
+    width: 100%;
+    border-radius: var(--border-radius-lg);
+    overflow: hidden;
+    background: var(--color-bg-soft);
+  }
+
+  .service-detail__image {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .service-detail__gallery-thumbnails {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: var(--spacing-md);
+  }
+
+  .service-detail__thumbnail {
+    width: 100%;
+    height: 100px;
+    object-fit: cover;
+    border-radius: var(--border-radius-md);
+    cursor: pointer;
+    transition: transform var(--transition-base), box-shadow var(--transition-base);
+    border: 2px solid transparent;
+  }
+
+  .service-detail__thumbnail:hover {
+    transform: scale(1.05);
+    box-shadow: var(--shadow-md);
+  }
+
+  .service-detail__content {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+
+  .service-detail__title {
+    font-family: var(--font-serif);
+    font-size: 2.5rem;
+    color: var(--color-cacao);
+    margin: 0 0 var(--spacing-lg) 0;
+  }
+
+  .service-detail__description {
+    color: var(--color-text);
+    line-height: 1.8;
+    font-size: 1.05rem;
+    margin-bottom: var(--spacing-lg);
+  }
+
+  .service-detail__description p {
+    margin-bottom: var(--spacing-md);
+  }
+
+  .service-detail__gallery-info {
+    background: var(--color-gold-light);
+    padding: var(--spacing-lg);
+    border-radius: var(--border-radius-md);
+    margin-bottom: var(--spacing-lg);
+  }
+
+  .service-detail__gallery-count {
+    margin: 0;
+    color: var(--color-cacao);
+    font-weight: 600;
+  }
+
+  .service-detail__cta {
+    margin-top: auto;
+  }
+
+  /* Gallery Modal */
+  .service-detail__gallery-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    background: rgba(0, 0, 0, 0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-lg);
+  }
+
+  .service-detail__gallery-modal[hidden] {
+    display: none !important;
+  }
+
+  .service-detail__gallery-close {
+    position: absolute;
+    top: var(--spacing-lg);
+    right: var(--spacing-lg);
+    background: none;
+    border: none;
+    color: var(--color-white);
+    cursor: pointer;
+    padding: var(--spacing-sm);
+    z-index: 10;
+  }
+
+  .service-detail__gallery-lightbox {
+    position: relative;
+    max-width: 90vw;
+    max-height: 90vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .service-detail__gallery-image {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+  }
+
+  .service-detail__gallery-prev,
+  .service-detail__gallery-next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    color: var(--color-white);
+    font-size: 2rem;
+    padding: var(--spacing-md);
+    cursor: pointer;
+    transition: background var(--transition-base);
+  }
+
+  .service-detail__gallery-prev {
+    left: var(--spacing-lg);
+  }
+
+  .service-detail__gallery-next {
+    right: var(--spacing-lg);
+  }
+
+  .service-detail__gallery-prev:hover,
+  .service-detail__gallery-next:hover {
+    background: rgba(255, 255, 255, 0.4);
+  }
+
+  .service-detail__empty {
+    text-align: center;
+    padding: var(--spacing-2xl);
+    background: var(--color-white);
+    border-radius: var(--border-radius-lg);
+  }
+
+  .service-detail__empty h2 {
+    color: var(--color-cacao);
+    margin-bottom: var(--spacing-md);
+  }
+
+  .service-detail__empty p {
+    color: var(--color-text-light);
+    margin-bottom: var(--spacing-lg);
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .service-detail {
+      padding: var(--spacing-xl) var(--spacing-md);
+    }
+
+    .service-detail__grid {
+      grid-template-columns: 1fr;
+      padding: var(--spacing-lg);
+      gap: var(--spacing-lg);
+    }
+
+    .service-detail__title {
+      font-size: 1.75rem;
+    }
+
+    .service-detail__gallery-prev,
+    .service-detail__gallery-next {
+      font-size: 1.5rem;
+      padding: var(--spacing-sm);
+    }
+  }
+{% endstylesheet %}
+
+{% javascript %}
+  document.addEventListener('DOMContentLoaded', function() {
+    const galleryModal = document.querySelector('[data-gallery-modal]');
+    const galleryImage = document.querySelector('[data-gallery-image]');
+    const galleryThumbnails = document.querySelectorAll('.service-detail__thumbnail');
+    const galleryClose = document.querySelector('[data-gallery-close]');
+    const galleryPrev = document.querySelector('[data-gallery-prev]');
+    const galleryNext = document.querySelector('[data-gallery-next]');
+
+    let currentImageIndex = 0;
+    const galleryImages = [];
+
+    // Collect gallery images
+    galleryThumbnails.forEach((thumb, idx) => {
+      galleryImages.push({
+        src: thumb.dataset.full || thumb.src,
+        alt: thumb.alt
+      });
+
+      // Open gallery on thumbnail click
+      thumb.addEventListener('click', () => {
+        if (galleryModal) {
+          currentImageIndex = idx;
+          updateGalleryImage();
+          galleryModal.removeAttribute('hidden');
+          document.body.style.overflow = 'hidden';
+        }
+      });
+    });
+
+    function updateGalleryImage() {
+      if (galleryImage && galleryImages[currentImageIndex]) {
+        galleryImage.src = galleryImages[currentImageIndex].src;
+        galleryImage.alt = galleryImages[currentImageIndex].alt;
+      }
+    }
+
+    // Navigation
+    if (galleryPrev) {
+      galleryPrev.addEventListener('click', () => {
+        currentImageIndex = (currentImageIndex - 1 + galleryImages.length) % galleryImages.length;
+        updateGalleryImage();
+      });
+    }
+
+    if (galleryNext) {
+      galleryNext.addEventListener('click', () => {
+        currentImageIndex = (currentImageIndex + 1) % galleryImages.length;
+        updateGalleryImage();
+      });
+    }
+
+    // Close gallery
+    const closeGallery = () => {
+      if (galleryModal) {
+        galleryModal.setAttribute('hidden', '');
+        document.body.style.overflow = '';
+      }
+    };
+
+    if (galleryClose) {
+      galleryClose.addEventListener('click', closeGallery);
+    }
+
+    // Close on Escape
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && galleryModal && !galleryModal.hasAttribute('hidden')) {
+        closeGallery();
+      }
+    });
+
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+      if (galleryModal && !galleryModal.hasAttribute('hidden')) {
+        if (e.key === 'ArrowLeft') galleryPrev?.click();
+        if (e.key === 'ArrowRight') galleryNext?.click();
+      }
+    });
+  });
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "Service Detail",
+  "settings": [
+    {
+      "type": "text",
+      "id": "back_text",
+      "label": "Testo bottone indietro",
+      "default": "Torna ai servizi"
+    },
+    {
+      "type": "text",
+      "id": "contact_text",
+      "label": "Testo CTA contatti",
+      "default": "Contattaci per informazioni"
+    },
+    {
+      "type": "text",
+      "id": "not_found_title",
+      "label": "Titolo servizio non trovato",
+      "default": "Servizio non trovato"
+    },
+    {
+      "type": "text",
+      "id": "not_found_text",
+      "label": "Descrizione servizio non trovato",
+      "default": "Il servizio che stai cercando non è disponibile."
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,416 @@
+{%- assign slide_count = section.blocks.size -%}
+
+<section
+  class="hero hero-slider"
+  style="--max-height: {{ section.settings.max_height }}svh"
+  data-autoplay="{{ section.settings.autoplay }}"
+  data-autoplay-speed="{{ section.settings.autoplay_speed | times: 1000 }}"
+  data-slide-count="{{ slide_count }}"
+  tabindex="0"
+>
+    <h1>nuovo push</h1>
+  <div class="hero__track" aria-live="polite">
+    {%- for block in section.blocks -%}
+      <div
+        class="hero__slide{% if forloop.first %} is-active{% endif %}"
+        style="--overlay-opacity: {{ block.settings.overlay_opacity | divided_by: 100.0 }}"
+        aria-hidden="{% unless forloop.first %}true{% else %}false{% endunless %}"
+        {{ block.shopify_attributes }}
+      >
+        <div class="hero__media">
+          {%- if block.settings.image -%}
+            <img
+              src="{{ block.settings.image | image_url: width: 2400 }}"
+              alt="{{ block.settings.image.alt | default: block.settings.title | escape }}"
+              width="{{ block.settings.image.width }}"
+              height="{{ block.settings.image.height }}"
+              loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
+              {% if forloop.first %}fetchpriority="high"{% endif %}
+            >
+          {%- else -%}
+            {{ 'lifestyle-1' | placeholder_svg_tag }}
+          {%- endif -%}
+          <div class="hero__overlay"></div>
+        </div>
+
+        <div class="hero__content fade-in">
+          {%- if block.settings.eyebrow != blank -%}
+            <span class="hero__eyebrow">{{ block.settings.eyebrow }}</span>
+          {%- endif -%}
+          {%- if block.settings.title != blank -%}
+            {%- if forloop.first -%}
+              <h1 class="hero__title">{{ block.settings.title }}</h1>
+            {%- else -%}
+              <h2 class="hero__title">{{ block.settings.title }}</h2>
+            {%- endif -%}
+          {%- endif -%}
+          {%- if block.settings.subtitle != blank -%}
+            <p class="hero__subtitle">{{ block.settings.subtitle }}</p>
+          {%- endif -%}
+          {%- if block.settings.cta_label != blank and block.settings.cta_url != blank -%}
+            <a href="{{ block.settings.cta_url }}" class="btn btn--light">
+              <span>{{ block.settings.cta_label }}</span>
+            </a>
+          {%- endif -%}
+        </div>
+      </div>
+    {%- endfor -%}
+  </div>
+
+  {%- if section.settings.show_arrows and slide_count > 1 -%}
+    <button class="hero__arrow hero__arrow--prev" aria-label="{{ 'general.accessibility.prev_slide' | t }}">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+        <path d="M12 4l-6 6 6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+    <button class="hero__arrow hero__arrow--next" aria-label="{{ 'general.accessibility.next_slide' | t }}">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+        <path d="M8 4l6 6-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+  {%- endif -%}
+
+  {%- if section.settings.show_dots and slide_count > 1 -%}
+    <div class="hero__dots" role="tablist" aria-label="{{ 'sections.hero.name' | t }}">
+      {%- for block in section.blocks -%}
+        <button
+          class="hero__dot{% if forloop.first %} is-active{% endif %}"
+          role="tab"
+          aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+          aria-label="{{ 'general.accessibility.go_to_slide' | t: index: forloop.index }}"
+          data-index="{{ forloop.index0 }}"
+        ></button>
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+
+  {%- if section.settings.show_scroll -%}
+    <div class="hero__scroll" aria-hidden="true">
+      <div class="hero__scroll-line"></div>
+      <span>Scopri</span>
+    </div>
+  {%- endif -%}
+
+</section>
+
+{% stylesheet %}
+  .hero-slider {
+    height: var(--max-height, 100svh);
+    min-height: 480px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero__track {
+    position: absolute;
+    inset: 0;
+  }
+
+  .hero__slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 0.9s ease;
+    z-index: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .hero__slide.is-active {
+    opacity: 1;
+    z-index: 1;
+  }
+
+  .hero__overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, var(--overlay-opacity, 0.35));
+  }
+
+  .hero__content {
+    position: relative;
+    z-index: 2;
+  }
+
+  /* Arrows */
+  .hero__arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    color: #fff;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s ease;
+  }
+
+  .hero__arrow:hover {
+    background: rgba(255, 255, 255, 0.28);
+  }
+
+  .hero__arrow--prev { left: 1.5rem; }
+  .hero__arrow--next { right: 1.5rem; }
+
+  /* Dots */
+  .hero__dots {
+    position: absolute;
+    bottom: 1.75rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+  }
+
+  .hero__dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.4);
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    transition: background 0.25s ease, transform 0.25s ease;
+  }
+
+  .hero__dot.is-active {
+    background: #fff;
+    transform: scale(1.35);
+  }
+
+  /* Scroll indicator: shift up when dots are present */
+  .hero-slider:has(.hero__dots) .hero__scroll {
+    bottom: 4.5rem;
+  }
+
+  @media (max-width: 768px) {
+    .hero__arrow {
+      width: 40px;
+      height: 40px;
+    }
+    .hero__arrow--prev { left: 0.75rem; }
+    .hero__arrow--next { right: 0.75rem; }
+  }
+{% endstylesheet %}
+
+{% javascript %}
+  (function () {
+    var slider = document.querySelector('.hero-slider');
+    if (!slider) return;
+
+    var slides     = Array.from(slider.querySelectorAll('.hero__slide'));
+    var dots       = Array.from(slider.querySelectorAll('.hero__dot'));
+    var prevBtn    = slider.querySelector('.hero__arrow--prev');
+    var nextBtn    = slider.querySelector('.hero__arrow--next');
+    var autoplay   = slider.dataset.autoplay === 'true';
+    var speed      = parseInt(slider.dataset.autoplaySpeed, 10) || 5000;
+    var total      = parseInt(slider.dataset.slideCount, 10) || slides.length;
+    var current    = 0;
+    var timer      = null;
+
+    function goTo(index) {
+      index = ((index % total) + total) % total;
+      slides[current].classList.remove('is-active');
+      slides[current].setAttribute('aria-hidden', 'true');
+      if (dots[current]) {
+        dots[current].classList.remove('is-active');
+        dots[current].setAttribute('aria-selected', 'false');
+      }
+      current = index;
+      slides[current].classList.add('is-active');
+      slides[current].setAttribute('aria-hidden', 'false');
+      if (dots[current]) {
+        dots[current].classList.add('is-active');
+        dots[current].setAttribute('aria-selected', 'true');
+      }
+    }
+
+    function start() {
+      if (!autoplay || total <= 1) return;
+      timer = setInterval(function () { goTo(current + 1); }, speed);
+    }
+
+    function stop() {
+      clearInterval(timer);
+      timer = null;
+    }
+
+    function restart() {
+      stop();
+      start();
+    }
+
+    if (prevBtn) prevBtn.addEventListener('click', function () { goTo(current - 1); restart(); });
+    if (nextBtn) nextBtn.addEventListener('click', function () { goTo(current + 1); restart(); });
+
+    dots.forEach(function (dot) {
+      dot.addEventListener('click', function () {
+        goTo(parseInt(dot.dataset.index, 10));
+        restart();
+      });
+    });
+
+    slider.addEventListener('mouseenter', stop);
+    slider.addEventListener('focusin', stop);
+    slider.addEventListener('mouseleave', start);
+    slider.addEventListener('focusout', start);
+
+    slider.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowLeft')  { goTo(current - 1); restart(); }
+      if (e.key === 'ArrowRight') { goTo(current + 1); restart(); }
+    });
+
+    var touchStartX = 0;
+    slider.addEventListener('touchstart', function (e) {
+      touchStartX = e.touches[0].clientX;
+    }, { passive: true });
+    slider.addEventListener('touchend', function (e) {
+      var diff = touchStartX - e.changedTouches[0].clientX;
+      if (Math.abs(diff) > 50) {
+        goTo(current + (diff > 0 ? 1 : -1));
+        restart();
+      }
+    });
+
+    // Theme editor: jump to selected block
+    document.addEventListener('shopify:block:select', function (e) {
+      var slide = e.target.closest('.hero__slide');
+      if (!slide) return;
+      var idx = slides.indexOf(slide);
+      if (idx !== -1) { stop(); goTo(idx); }
+    });
+    document.addEventListener('shopify:block:deselect', start);
+
+    start();
+  })();
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "t:sections.hero.name",
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "t:blocks.slide.name",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "t:labels.image"
+        },
+        {
+          "type": "range",
+          "id": "overlay_opacity",
+          "label": "t:labels.overlay_opacity",
+          "min": 0,
+          "max": 80,
+          "step": 5,
+          "unit": "%",
+          "default": 35
+        },
+        {
+          "type": "text",
+          "id": "eyebrow",
+          "label": "t:labels.eyebrow"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "t:labels.title"
+        },
+        {
+          "type": "text",
+          "id": "subtitle",
+          "label": "t:labels.subtitle"
+        },
+        {
+          "type": "text",
+          "id": "cta_label",
+          "label": "t:labels.cta_label"
+        },
+        {
+          "type": "url",
+          "id": "cta_url",
+          "label": "t:labels.cta_url"
+        }
+      ]
+    }
+  ],
+  "settings": [
+    {
+      "type": "range",
+      "id": "max_height",
+      "label": "t:labels.max_height",
+      "min": 50,
+      "max": 100,
+      "step": 5,
+      "unit": "vh",
+      "default": 100
+    },
+    {
+      "type": "header",
+      "content": "t:headers.behaviour"
+    },
+    {
+      "type": "checkbox",
+      "id": "autoplay",
+      "label": "t:labels.autoplay",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "autoplay_speed",
+      "label": "t:labels.autoplay_speed",
+      "min": 2,
+      "max": 10,
+      "step": 1,
+      "unit": "s",
+      "default": 5
+    },
+    {
+      "type": "checkbox",
+      "id": "show_dots",
+      "label": "t:labels.show_dots",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_arrows",
+      "label": "t:labels.show_arrows",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_scroll",
+      "label": "t:labels.show_scroll",
+      "default": true
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.hero.name",
+      "blocks": [
+        {
+          "type": "slide",
+          "settings": {
+            "eyebrow": "Pasticceria Artigianale dal 1985",
+            "title": "L'arte della pasticceria",
+            "subtitle": "Dolci artigianali creati con ingredienti selezionati e passione autentica.",
+            "cta_label": "Scopri la collezione",
+            "overlay_opacity": 35
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

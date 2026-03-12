@@ -1,0 +1,44 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "page": {
+      "type": "page",
+      "settings": {}
+    },
+    "hero_banner_9Lg7me": {
+      "type": "hero-banner",
+      "name": "t:sections.hero.name",
+      "settings": {
+        "show_scroll": true
+      }
+    },
+    "featured_collection_cKY6CF": {
+      "type": "featured-collection",
+      "name": "t:sections.featured_collection.name",
+      "settings": {
+        "collection": "",
+        "eyebrow": "I nostri prodotti",
+        "title": "Selezione del giorno",
+        "description": "",
+        "products_count": 4,
+        "columns": "4",
+        "background": "",
+        "show_cta": true,
+        "cta_label": "Vedi tutta la collezione"
+      }
+    }
+  },
+  "order": [
+    "page",
+    "hero_banner_9Lg7me",
+    "featured_collection_cKY6CF"
+  ]
+}

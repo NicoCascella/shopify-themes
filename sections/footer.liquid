@@ -1,0 +1,137 @@
+<footer class="site-footer" role="contentinfo">
+  <div class="container">
+
+    <div class="footer-grid">
+
+      <!-- Brand column -->
+      <div class="footer-brand">
+        <p class="footer-brand__name">{{ shop.name }}</p>
+        <p class="footer-brand__sub">{{ section.settings.tagline }}</p>
+        {%- if section.settings.description != blank -%}
+          <p>{{ section.settings.description }}</p>
+        {%- endif -%}
+      </div>
+
+      <!-- Shop links -->
+      <div class="footer-col">
+        <h4>{{ 'footer.shop' | t }}</h4>
+        <ul>
+          {%- for link in linklists[section.settings.menu_shop].links -%}
+            <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+          {%- endfor -%}
+        </ul>
+      </div>
+
+      <!-- Services links -->
+      <div class="footer-col">
+        <h4>{{ 'footer.services' | t }}</h4>
+        <ul>
+          {%- for link in linklists[section.settings.menu_services].links -%}
+            <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+          {%- endfor -%}
+        </ul>
+      </div>
+
+      <!-- Contact -->
+      <div class="footer-col">
+        <h4>{{ 'footer.contact' | t }}</h4>
+        <ul>
+          {%- if section.settings.address != blank -%}
+            <li style="color:rgba(255,255,255,.45); font-size:.82rem; line-height:1.6">{{ section.settings.address }}</li>
+          {%- endif -%}
+          {%- if section.settings.phone != blank -%}
+            <li><a href="tel:{{ section.settings.phone | remove: ' ' | remove: '-' }}">{{ section.settings.phone }}</a></li>
+          {%- endif -%}
+          {%- if section.settings.email != blank -%}
+            <li><a href="mailto:{{ section.settings.email }}">{{ section.settings.email }}</a></li>
+          {%- endif -%}
+        </ul>
+      </div>
+
+    </div>
+
+    <!-- Footer bottom bar -->
+    <div class="footer-bottom">
+      <span>&copy; {{ 'now' | date: '%Y' }} {{ shop.name }}. {{ 'footer.rights' | t }}</span>
+
+      <div class="footer-socials">
+        {%- if section.settings.instagram != blank -%}
+          <a href="{{ section.settings.instagram }}" target="_blank" rel="noopener" aria-label="Instagram">Instagram</a>
+        {%- endif -%}
+        {%- if section.settings.facebook != blank -%}
+          <a href="{{ section.settings.facebook }}" target="_blank" rel="noopener" aria-label="Facebook">Facebook</a>
+        {%- endif -%}
+      </div>
+
+      <div style="display:flex;gap:1.5rem">
+        {%- for link in linklists[section.settings.menu_legal].links -%}
+          <a href="{{ link.url }}" style="font-size:.68rem;color:rgba(255,255,255,.3);transition:color .2s ease">{{ link.title }}</a>
+        {%- endfor -%}
+      </div>
+    </div>
+
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "t:sections.footer.name",
+  "settings": [
+    {
+      "type": "text",
+      "id": "tagline",
+      "label": "t:labels.tagline",
+      "default": "Pasticceria Artigianale"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "t:labels.description",
+      "default": "Dolci artigianali con ingredienti selezionati, tradizione italiana e cura per ogni dettaglio."
+    },
+    {
+      "type": "link_list",
+      "id": "menu_shop",
+      "label": "t:labels.menu_shop",
+      "default": "main-menu"
+    },
+    {
+      "type": "link_list",
+      "id": "menu_services",
+      "label": "t:labels.menu_services",
+      "default": "main-menu"
+    },
+    {
+      "type": "link_list",
+      "id": "menu_legal",
+      "label": "t:labels.menu_legal",
+      "default": "footer"
+    },
+    {
+      "type": "text",
+      "id": "address",
+      "label": "t:labels.address"
+    },
+    {
+      "type": "text",
+      "id": "phone",
+      "label": "t:labels.phone"
+    },
+    {
+      "type": "text",
+      "id": "email",
+      "label": "t:labels.email"
+    },
+    {
+      "type": "url",
+      "id": "instagram",
+      "label": "t:labels.instagram"
+    },
+    {
+      "type": "url",
+      "id": "facebook",
+      "label": "t:labels.facebook"
+    }
+  ]
+}
+{% endschema %}

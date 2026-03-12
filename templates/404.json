@@ -1,0 +1,43 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "404",
+      "disabled": true,
+      "settings": {}
+    },
+    "booking_69dWiP": {
+      "type": "booking",
+      "name": "t:sections.booking.name",
+      "settings": {
+        "hero_image": "shopify://shop_images/laboratorio.jpg",
+        "eyebrow": "404 pagina non trovata",
+        "hero_title": "Non abbiamo trovato quello che cercavi",
+        "hero_subtitle": "Contattaci per qualsiasi inforamazione",
+        "info_eyebrow": "Come funziona",
+        "info_title": "Parliamoci",
+        "info_text": "<p>Compila il modulo e ti contatteremo entro 24 ore per discutere ogni dettaglio del tuo evento.</p>",
+        "hours": "Lun–Sab: 8:00–19:00 / Dom: 9:00–13:00",
+        "address": "",
+        "button_label": "Invia richiesta"
+      }
+    },
+    "17731527543511cb9f": {
+      "type": "apps",
+      "settings": {}
+    }
+  },
+  "order": [
+    "main",
+    "booking_69dWiP",
+    "17731527543511cb9f"
+  ]
+}

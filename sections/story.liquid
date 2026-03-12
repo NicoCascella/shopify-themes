@@ -1,0 +1,130 @@
+{% doc %}
+  Brand story section with image + editorial text layout.
+  Alternating image/text direction configurable.
+
+  @example
+  {% section 'story' %}
+{% enddoc %}
+
+<section class="story section {{ section.settings.background }}">
+  <div class="container" style="padding-inline:0;max-width:var(--max-width);margin-inline:auto">
+
+    <div class="story-inner {% if section.settings.image_position == 'right' %}{% endif %}"
+         style="{% if section.settings.image_position == 'right' %}direction:rtl{% endif %}">
+
+      <div class="story__image fade-in" style="direction:ltr">
+        {%- if section.settings.image -%}
+          <img
+            src="{{ section.settings.image | image_url: width: 1000 }}"
+            alt="{{ section.settings.image.alt | default: section.settings.title | escape }}"
+            loading="lazy"
+            width="{{ section.settings.image.width }}"
+            height="{{ section.settings.image.height }}"
+          >
+        {%- else -%}
+          {{ 'lifestyle-1' | placeholder_svg_tag }}
+        {%- endif -%}
+      </div>
+
+      <div class="story__content fade-in" style="direction:ltr">
+        {%- if section.settings.eyebrow != blank -%}
+          <span class="eyebrow">{{ section.settings.eyebrow }}</span>
+        {%- endif -%}
+        {%- if section.settings.title != blank -%}
+          <h2>{{ section.settings.title }}</h2>
+        {%- endif -%}
+        <div class="section-divider"></div>
+        {%- if section.settings.text != blank -%}
+          <div class="story__text" style="color:var(--color-text-muted);line-height:1.85">
+            {{ section.settings.text }}
+          </div>
+        {%- endif -%}
+        {%- if section.settings.signature != blank -%}
+          <span class="story__signature">{{ section.settings.signature }}</span>
+        {%- endif -%}
+        {%- if section.settings.cta_label != blank and section.settings.cta_url != blank -%}
+          <div style="margin-top:2rem">
+            <a href="{{ section.settings.cta_url }}" class="btn btn--accent">
+              <span>{{ section.settings.cta_label }}</span>
+            </a>
+          </div>
+        {%- endif -%}
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "t:sections.story.name",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "t:labels.image"
+    },
+    {
+      "type": "select",
+      "id": "image_position",
+      "label": "t:labels.image_position",
+      "options": [
+        { "value": "left", "label": "t:options.left" },
+        { "value": "right", "label": "t:options.right" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "t:labels.eyebrow",
+      "default": "La nostra storia"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "t:labels.title",
+      "default": "Una passione di famiglia"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "t:labels.text",
+      "default": "<p>Da oltre trent'anni la nostra pasticceria crea dolci con ingredienti autentici, lievitazioni naturali e una cura artigianale tramandata di generazione in generazione.</p><p>Ogni prodotto nasce da ricette originali, perfezionate nel tempo, per offrire un'esperienza di gusto genuina e raffinata.</p>"
+    },
+    {
+      "type": "text",
+      "id": "signature",
+      "label": "t:labels.signature",
+      "default": "Leone"
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "t:labels.cta_label",
+      "default": "Chi siamo"
+    },
+    {
+      "type": "url",
+      "id": "cta_url",
+      "label": "t:labels.cta_url"
+    },
+    {
+      "type": "select",
+      "id": "background",
+      "label": "t:labels.background",
+      "options": [
+        { "value": "", "label": "t:options.white" },
+        { "value": "section--soft", "label": "t:options.soft" }
+      ],
+      "default": "section--soft"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.story.name"
+    }
+  ]
+}
+{% endschema %}

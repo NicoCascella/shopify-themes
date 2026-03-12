@@ -1,0 +1,348 @@
+{% doc %}
+  Main product page section — premium gallery, variants, price, add to cart.
+
+  @example
+  {% section 'product' %}
+{% enddoc %}
+
+<section class="product-page">
+  <div class="container">
+
+    <div class="product-layout">
+
+      <!-- Gallery -->
+      <div class="product-gallery">
+        <div class="product-gallery__main">
+          {%- if product.featured_image -%}
+            <img
+              src="{{ product.featured_image | image_url: width: 1200 }}"
+              alt="{{ product.featured_image.alt | default: product.title | escape }}"
+              id="main-product-image"
+              loading="eager"
+              fetchpriority="high"
+            >
+          {%- else -%}
+            {{ 'product-1' | placeholder_svg_tag }}
+          {%- endif -%}
+        </div>
+
+        {%- if product.images.size > 1 -%}
+          <div class="product-gallery__thumbs">
+            {%- for image in product.images limit: 6 -%}
+              <div class="product-gallery__thumb {% if forloop.first %}active{% endif %}">
+                <img
+                  src="{{ image | image_url: width: 200 }}"
+                  alt="{{ image.alt | default: product.title | escape }}"
+                  loading="lazy"
+                >
+              </div>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      </div>
+
+      <!-- Info -->
+      <div class="product-info fade-in">
+
+        {%- if product.vendor != blank -%}
+          <p class="product-info__vendor">{{ product.vendor }}</p>
+        {%- endif -%}
+
+        <h1 class="product-info__title">{{ product.title }}</h1>
+
+        <div class="product-info__price" id="product-price">
+          {%- assign selected_variant = product.selected_or_first_available_variant -%}
+          {%- if selected_variant.compare_at_price > selected_variant.price -%}
+            <s id="product-compare-price">{{ selected_variant.compare_at_price | money }}</s>
+          {%- else -%}
+            <s id="product-compare-price" style="display:none"></s>
+          {%- endif -%}
+          <span id="product-current-price">{{ selected_variant.price | money }}</span>
+        </div>
+
+        <div class="product-divider"></div>
+
+        {%- if product.description != blank -%}
+          <div class="product-info__description">
+            {{ product.description }}
+          </div>
+        {%- endif -%}
+
+        {%- unless product.has_only_default_variant -%}
+          {%- for option in product.options_with_values -%}
+            <span class="variant-label">{{ option.name }}</span>
+            <div class="variant-options">
+              {%- for value in option.values -%}
+                {%- assign variant = product.variants | where: 'option1', value | first -%}
+                <button
+                  class="variant-option {% if forloop.first %}active{% endif %}{% unless variant.available %} variant-option--unavailable{% endunless %}"
+                  data-variant-id="{{ variant.id }}"
+                  data-price="{{ variant.price }}"
+                  data-compare-price="{{ variant.compare_at_price }}"
+                  data-available="{{ variant.available }}"
+                  aria-label="{{ option.name }}: {{ value }}"
+                  {% unless variant.available %}aria-disabled="true"{% endunless %}
+                >
+                  {{ value }}
+                </button>
+              {%- endfor -%}
+            </div>
+          {%- endfor -%}
+        {%- endunless -%}
+
+        {%- form 'product', product -%}
+          <input type="hidden" name="id" id="variant-id" value="{{ product.selected_or_first_available_variant.id }}">
+
+          <div class="qty-wrap">
+            <div class="qty-control">
+              <button type="button" class="qty-btn" data-action="minus" aria-label="{{ 'product.quantity_minus' | t }}">−</button>
+              <input type="number" name="quantity" value="1" min="1" class="qty-input" aria-label="{{ 'product.quantity' | t }}">
+              <button type="button" class="qty-btn" data-action="plus" aria-label="{{ 'product.quantity_plus' | t }}">+</button>
+            </div>
+          </div>
+
+          <button
+            type="submit"
+            name="add"
+            class="product-atc"
+            data-added-text="{{ 'product.added' | t }}"
+            data-add-to-cart-text="{{ 'product.add_to_cart' | t }}"
+            data-sold-out-text="{{ 'product.sold_out' | t }}"
+            {% unless product.selected_or_first_available_variant.available %}disabled{% endunless %}
+          >
+            <span>
+              {%- if product.available -%}
+                {{ 'product.add_to_cart' | t }}
+              {%- else -%}
+                {{ 'product.sold_out' | t }}
+              {%- endif -%}
+            </span>
+          </button>
+
+        {%- endform -%}
+
+        <!-- Meta info -->
+        <div class="product-meta">
+          {%- if product.type != blank -%}
+            <div class="product-meta__item">
+              <strong>{{ 'product.type' | t }}</strong>
+              <span>{{ product.type }}</span>
+            </div>
+          {%- endif -%}
+          {%- if product.vendor != blank -%}
+            <div class="product-meta__item">
+              <strong>{{ 'product.brand' | t }}</strong>
+              <span>{{ product.vendor }}</span>
+            </div>
+          {%- endif -%}
+          {%- if product.tags.size > 0 -%}
+            <div class="product-meta__item">
+              <strong>{{ 'product.tags' | t }}</strong>
+              <span>{{ product.tags | join: ', ' }}</span>
+            </div>
+          {%- endif -%}
+        </div>
+
+        {%- render 'product-allergens', product: product -%}
+
+      </div>
+    </div>
+
+  </div>
+
+  {%- liquid
+    assign mf          = product.metafields.custom
+    assign story_title = mf.story_title.value
+    assign story_image = mf.story_image.value
+    assign has_story   = false
+    if story_title != blank or mf.story_text != blank
+      assign has_story = true
+    endif
+  -%}
+
+  {%- if has_story -%}
+    <div class="product-story fade-in">
+
+      <div class="product-story__inner">
+
+        <div class="product-story__copy">
+
+          {%- if mf.story_eyebrow.value != blank -%}
+            <p class="product-story__eyebrow">{{ mf.story_eyebrow.value }}</p>
+          {%- endif -%}
+
+          {%- if story_title != blank -%}
+            <h2 class="product-story__title">{{ story_title }}</h2>
+          {%- endif -%}
+
+          {%- if mf.story_text != blank -%}
+            <div class="product-story__text">{{ mf.story_text | metafield_tag }}</div>
+          {%- endif -%}
+
+          {%- liquid
+            assign has_features = false
+            for i in (1..3)
+              assign key_title = 'story_feature_' | append: i | append: '_title'
+              assign feat_title = mf[key_title].value
+              if feat_title != blank
+                assign has_features = true
+                break
+              endif
+            endfor
+          -%}
+
+          {%- if has_features -%}
+            <ul class="product-story__features">
+              {%- for i in (1..3) -%}
+                {%- liquid
+                  assign key_icon  = 'story_feature_' | append: i | append: '_icon'
+                  assign key_title = 'story_feature_' | append: i | append: '_title'
+                  assign key_text  = 'story_feature_' | append: i | append: '_text'
+                  assign feat_icon  = mf[key_icon].value
+                  assign feat_title = mf[key_title].value
+                  assign feat_text  = mf[key_text].value
+                -%}
+                {%- if feat_title != blank -%}
+                  <li class="product-story__feature">
+                    {%- if feat_icon != blank -%}
+                      <span class="product-story__feature-icon" aria-hidden="true">{{ feat_icon }}</span>
+                    {%- endif -%}
+                    <div>
+                      <strong class="product-story__feature-title">{{ feat_title }}</strong>
+                      {%- if feat_text != blank -%}
+                        <p class="product-story__feature-text">{{ feat_text }}</p>
+                      {%- endif -%}
+                    </div>
+                  </li>
+                {%- endif -%}
+              {%- endfor -%}
+            </ul>
+          {%- endif -%}
+
+        </div>
+
+        {%- if story_image -%}
+          <div class="product-story__image">
+            {{ story_image | image_url: width: 600 | image_tag:
+              loading: 'lazy',
+              alt: story_image.alt | default: product.title | escape
+            }}
+          </div>
+        {%- endif -%}
+
+      </div>
+    </div>
+  {%- endif -%}
+
+</section>
+
+{% stylesheet %}
+  .product-story {
+    border-top: 1px solid var(--color-border);
+    padding: 4rem 2rem;
+  }
+
+  .product-story__inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    align-items: center;
+  }
+
+  .product-story__inner:has(.product-story__image) {
+    grid-template-columns: 1fr auto;
+  }
+
+  .product-story__image {
+    width: 320px;
+    flex-shrink: 0;
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .product-story__image img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+  }
+
+  .product-story__eyebrow {
+    font-size: 0.68rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    margin-bottom: 0.75rem;
+  }
+
+  .product-story__title {
+    font-family: var(--font-heading);
+    font-size: clamp(1.6rem, 3vw, 2.4rem);
+    font-weight: 400;
+    line-height: 1.2;
+    color: var(--color-text);
+    margin-bottom: 1.25rem;
+  }
+
+  .product-story__text {
+    font-size: 0.95rem;
+    line-height: 1.85;
+    color: var(--color-text-muted);
+    margin-bottom: 2rem;
+  }
+
+  .product-story__features {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .product-story__feature {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .product-story__feature-icon {
+    font-size: 1.4rem;
+    line-height: 1;
+    flex-shrink: 0;
+    margin-top: 0.1rem;
+  }
+
+  .product-story__feature-title {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: var(--color-text);
+    margin-bottom: 0.2rem;
+  }
+
+  .product-story__feature-text {
+    font-size: 0.82rem;
+    line-height: 1.6;
+    color: var(--color-text-muted);
+    margin: 0;
+  }
+
+  @media (max-width: 768px) {
+    .product-story__inner,
+    .product-story__inner:has(.product-story__image) {
+      grid-template-columns: 1fr;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:sections.product.name",
+  "settings": []
+}
+{% endschema %}

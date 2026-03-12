@@ -1,0 +1,183 @@
+{% doc %}
+  Booking/reservation page section with an elegant contact form.
+
+  @example
+  {% section 'booking' %}
+{% enddoc %}
+
+<section class="page-hero" style="min-height:40vh">
+  <div class="page-hero__media">
+    {%- if section.settings.hero_image -%}
+      <img
+        src="{{ section.settings.hero_image | image_url: width: 2400 }}"
+        alt="{{ section.settings.hero_image.alt | default: 'Prenotazioni' | escape }}"
+        loading="eager"
+        fetchpriority="high"
+      >
+    {%- else -%}
+      {{ 'lifestyle-2' | placeholder_svg_tag }}
+    {%- endif -%}
+    <div class="page-hero__overlay"></div>
+  </div>
+  <div class="container">
+    <div class="page-hero__content fade-in">
+      <span class="eyebrow" style="color:rgba(255,255,255,.65)">{{ section.settings.eyebrow }}</span>
+      <h1>{{ section.settings.hero_title }}</h1>
+      <p style="color:rgba(255,255,255,.8);margin-top:1rem;font-size:.95rem;max-width:44ch">{{ section.settings.hero_subtitle }}</p>
+    </div>
+  </div>
+</section>
+
+<section class="booking-section">
+  <div class="container">
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-lg);align-items:start" class="fade-in">
+
+      <!-- Info column -->
+      <div>
+        <span class="eyebrow">{{ section.settings.info_eyebrow }}</span>
+        <h2>{{ section.settings.info_title }}</h2>
+        <div class="section-divider"></div>
+        {%- if section.settings.info_text != blank -%}
+          <div style="color:var(--color-text-muted);line-height:1.85;margin-bottom:2rem">{{ section.settings.info_text }}</div>
+        {%- endif -%}
+
+        {%- if section.settings.hours != blank -%}
+          <div style="margin-bottom:1.5rem">
+            <p style="font-size:.68rem;font-weight:500;letter-spacing:.18em;text-transform:uppercase;margin-bottom:.5rem">{{ 'booking.hours' | t }}</p>
+            <p style="color:var(--color-text-muted);font-size:.88rem">{{ section.settings.hours }}</p>
+          </div>
+        {%- endif -%}
+        {%- if section.settings.address != blank -%}
+          <div style="margin-bottom:1.5rem">
+            <p style="font-size:.68rem;font-weight:500;letter-spacing:.18em;text-transform:uppercase;margin-bottom:.5rem">{{ 'booking.address' | t }}</p>
+            <p style="color:var(--color-text-muted);font-size:.88rem">{{ section.settings.address }}</p>
+          </div>
+        {%- endif -%}
+      </div>
+
+      <!-- Form column -->
+      <div>
+        {%- form 'contact', class: 'booking-form' -%}
+          <div class="form-group">
+            <label for="contact-name">{{ 'booking.name' | t }}</label>
+            <input type="text" id="contact-name" name="contact[name]" required autocomplete="name">
+          </div>
+          <div class="form-group">
+            <label for="contact-email">{{ 'booking.email' | t }}</label>
+            <input type="email" id="contact-email" name="contact[email]" required autocomplete="email">
+          </div>
+          <div class="form-group">
+            <label for="contact-phone">{{ 'booking.phone' | t }}</label>
+            <input type="tel" id="contact-phone" name="contact[phone]" autocomplete="tel">
+          </div>
+          <div class="form-group">
+            <label for="contact-date">{{ 'booking.date' | t }}</label>
+            <input type="date" id="contact-date" name="contact[body][data]">
+          </div>
+          <div class="form-group">
+            <label for="contact-type">{{ 'booking.event_type' | t }}</label>
+            <select id="contact-type" name="contact[body][tipo_evento]">
+              <option value="">— {{ 'booking.select' | t }} —</option>
+              <option value="matrimonio">{{ 'booking.wedding' | t }}</option>
+              <option value="compleanno">{{ 'booking.birthday' | t }}</option>
+              <option value="catering">{{ 'booking.catering' | t }}</option>
+              <option value="corporate">{{ 'booking.corporate' | t }}</option>
+              <option value="altro">{{ 'booking.other' | t }}</option>
+            </select>
+          </div>
+          <div class="form-group full-width">
+            <label for="contact-message">{{ 'booking.message' | t }}</label>
+            <textarea id="contact-message" name="contact[body][messaggio]" rows="5" placeholder="{{ 'booking.message_placeholder' | t }}"></textarea>
+          </div>
+          <div class="full-width" style="margin-top:.5rem">
+            <button type="submit" class="btn btn--filled" style="width:100%;justify-content:center">
+              <span>{{ section.settings.button_label | default: 'Invia richiesta' }}</span>
+            </button>
+          </div>
+        {%- endform -%}
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+{% stylesheet %}
+  @media (max-width: 760px) {
+    .booking-section .container > div {
+      grid-template-columns: 1fr !important;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:sections.booking.name",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "t:labels.image"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "t:labels.eyebrow",
+      "default": "Prenotazioni"
+    },
+    {
+      "type": "text",
+      "id": "hero_title",
+      "label": "t:labels.title",
+      "default": "Prenota il tuo evento"
+    },
+    {
+      "type": "text",
+      "id": "hero_subtitle",
+      "label": "t:labels.subtitle",
+      "default": "Contattaci per pianificare insieme il tuo evento dolce."
+    },
+    {
+      "type": "text",
+      "id": "info_eyebrow",
+      "label": "t:labels.eyebrow",
+      "default": "Come funziona"
+    },
+    {
+      "type": "text",
+      "id": "info_title",
+      "label": "t:labels.title",
+      "default": "Parliamoci"
+    },
+    {
+      "type": "richtext",
+      "id": "info_text",
+      "label": "t:labels.text",
+      "default": "<p>Compila il modulo e ti contatteremo entro 24 ore per discutere ogni dettaglio del tuo evento.</p>"
+    },
+    {
+      "type": "text",
+      "id": "hours",
+      "label": "t:labels.hours",
+      "default": "Lun–Sab: 8:00–19:00 / Dom: 9:00–13:00"
+    },
+    {
+      "type": "text",
+      "id": "address",
+      "label": "t:labels.address"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "t:labels.button",
+      "default": "Invia richiesta"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.booking.name"
+    }
+  ]
+}
+{% endschema %}

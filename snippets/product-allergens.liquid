@@ -1,0 +1,130 @@
+{% doc %}
+  Renders the ingredients and allergens section for a pastry product.
+
+  Reads data from product metafields:
+  - `custom.ingredienti`  — multi-line text with ingredient list
+  - `custom.allergeni`    — comma-separated list of active allergens (EU 14)
+  - `custom.tracce`       — comma-separated list of "may contain" allergens
+
+  @param {product} product - The Shopify product object
+
+  @example
+  {% render 'product-allergens', product: product %}
+{% enddoc %}
+
+{%- liquid
+  assign ingredienti  = product.metafields.custom.ingredienti.value
+  assign allergeni    = product.metafields.custom.allergeni.value | downcase
+  assign tracce       = product.metafields.custom.tracce.value | downcase
+
+  assign eu_allergens = 'glutine,crostacei,uova,pesce,arachidi,soia,latte,frutta a guscio,sedano,senape,sesamo,solfiti,lupini,molluschi' | split: ','
+
+  assign has_content = false
+  if ingredienti != blank or allergeni != blank or tracce != blank
+    assign has_content = true
+  endif
+-%}
+
+{%- if has_content -%}
+<div class="product-allergens">
+
+  {%- if ingredienti != blank -%}
+    <details class="allergens-accordion" open>
+      <summary class="allergens-accordion__trigger">
+        <span>{{ 'product.allergens.ingredients_title' | t }}</span>
+        <svg class="allergens-accordion__icon" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </summary>
+      <div class="allergens-accordion__body">
+        <p class="allergens-ingredients">{{ ingredienti }}</p>
+      </div>
+    </details>
+  {%- endif -%}
+
+  {%- if allergeni != blank -%}
+    <details class="allergens-accordion">
+      <summary class="allergens-accordion__trigger">
+        <span>{{ 'product.allergens.allergens_title' | t }}</span>
+        <svg class="allergens-accordion__icon" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </summary>
+      <div class="allergens-accordion__body">
+        <p class="allergens-text">{{ allergeni | capitalize }}</p>
+
+        {%- if tracce != blank -%}
+          <p class="allergens-text allergens-text--traces">{{ 'product.allergens.may_contain' | t }}: {{ tracce | capitalize }}</p>
+        {%- endif -%}
+
+        <p class="allergens-disclaimer">{{ 'product.allergens.disclaimer' | t }}</p>
+      </div>
+    </details>
+  {%- endif -%}
+
+</div>
+{%- endif -%}
+
+{% stylesheet %}
+  .product-allergens {
+    margin-top: 2rem;
+    border-top: 1px solid color-mix(in srgb, var(--color-primary) 20%, transparent);
+  }
+
+  .allergens-accordion {
+    border-bottom: 1px solid color-mix(in srgb, var(--color-primary) 20%, transparent);
+  }
+
+  .allergens-accordion__trigger {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    padding: 1rem 0;
+    cursor: pointer;
+    list-style: none;
+    font-family: var(--font-heading);
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--color-primary);
+    user-select: none;
+  }
+
+  .allergens-accordion__trigger::-webkit-details-marker {
+    display: none;
+  }
+
+  .allergens-accordion__icon {
+    flex-shrink: 0;
+    transition: transform 0.25s ease;
+  }
+
+  .allergens-accordion[open] .allergens-accordion__icon {
+    transform: rotate(180deg);
+  }
+
+  .allergens-accordion__body {
+    padding-bottom: 1.25rem;
+  }
+
+  .allergens-ingredients,
+  .allergens-text {
+    font-size: 0.9rem;
+    line-height: 1.7;
+    color: var(--color-text);
+    margin-bottom: 0.5rem;
+  }
+
+  .allergens-text--traces {
+    margin-top: 0.5rem;
+  }
+
+  .allergens-disclaimer {
+    font-size: 0.78rem;
+    color: var(--color-text-light, #888);
+    font-style: italic;
+    margin-top: 0.5rem;
+  }
+{% endstylesheet %}

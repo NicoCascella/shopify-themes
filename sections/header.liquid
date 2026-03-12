@@ -1,0 +1,759 @@
+<header class="site-header{% unless section.settings.sticky %} site-header--static{% endunless %}" role="banner">
+  <div class="container header-inner">
+
+    <!-- Left navigation (desktop only) -->
+    <nav class="header-nav" role="navigation" aria-label="{{ 'general.accessibility.nav_left' | t }}">
+      {%- for link in linklists[section.settings.menu_left].links -%}
+        {%- if link.links != blank -%}
+          <div class="nav-item nav-item--has-dropdown">
+            <button class="nav-item__toggle" aria-expanded="false" aria-haspopup="true">
+              {{ link.title }}
+              <svg class="nav-item__chevron" width="8" height="5" viewBox="0 0 8 5" fill="none" aria-hidden="true">
+                <path d="M1 1l3 3 3-3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            <ul class="nav-dropdown">
+              {%- for child_link in link.links -%}
+                <li>
+                  <a href="{{ child_link.url }}"{% if child_link.url == request.path %} class="active" aria-current="page"{% endif %}>
+                    {{ child_link.title }}
+                  </a>
+                </li>
+              {%- endfor -%}
+            </ul>
+          </div>
+        {%- else -%}
+          <a href="{{ link.url }}"{% if link.url == request.path %} class="active" aria-current="page"{% endif %}>
+            {{ link.title }}
+          </a>
+        {%- endif -%}
+      {%- endfor -%}
+    </nav>
+
+    <!-- Logo — firma o testo -->
+    <a href="{{ routes.root_url }}" class="header-logo" aria-label="{{ shop.name }}">
+      {%- if section.settings.logo -%}
+        <img
+          src="{{ section.settings.logo | image_url: width: 320 }}"
+          alt="{{ shop.name }}"
+          class="header-logo__img"
+          loading="eager"
+          style="--logo-max-width: {{ section.settings.logo_max_width }}px"
+        >
+      {%- else -%}
+        <span class="header-logo__name">{{ shop.name }}</span>
+        {%- if section.settings.tagline != blank -%}
+          <span class="header-logo__tagline">{{ section.settings.tagline }}</span>
+        {%- endif -%}
+      {%- endif -%}
+    </a>
+
+    <!-- Right actions -->
+    <div class="header-actions">
+      <nav class="header-nav" role="navigation" aria-label="{{ 'general.accessibility.nav_right' | t }}">
+        {%- for link in linklists[section.settings.menu_right].links -%}
+          {%- if link.links != blank -%}
+            <div class="nav-item nav-item--has-dropdown">
+              <button class="nav-item__toggle" aria-expanded="false" aria-haspopup="true">
+                {{ link.title }}
+                <svg class="nav-item__chevron" width="8" height="5" viewBox="0 0 8 5" fill="none" aria-hidden="true">
+                  <path d="M1 1l3 3 3-3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+              <ul class="nav-dropdown">
+                {%- for child_link in link.links -%}
+                  <li>
+                    <a href="{{ child_link.url }}"{% if child_link.url == request.path %} class="active" aria-current="page"{% endif %}>
+                      {{ child_link.title }}
+                    </a>
+                  </li>
+                {%- endfor -%}
+              </ul>
+            </div>
+          {%- else -%}
+            <a href="{{ link.url }}"{% if link.url == request.path %} class="active" aria-current="page"{% endif %}>
+              {{ link.title }}
+            </a>
+          {%- endif -%}
+        {%- endfor -%}
+      </nav>
+
+      <!-- Search -->
+      {%- if section.settings.show_search -%}
+        <button class="header-icon search-toggle" aria-label="{{ 'general.search.placeholder' | t }}" aria-expanded="false" aria-controls="search-modal">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+            <circle cx="7.5" cy="7.5" r="5.5" stroke="currentColor" stroke-width="1.4"/>
+            <path d="M12 12l4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+          </svg>
+        </button>
+      {%- endif -%}
+
+      <!-- Account -->
+      {%- if section.settings.show_account -%}
+        <a href="{{ routes.account_url }}" class="header-icon" aria-label="{{ 'general.accessibility.account' | t }}">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <circle cx="10" cy="7" r="3.5" stroke="currentColor" stroke-width="1.4"/>
+            <path d="M3 18c0-3.866 3.134-7 7-7s7 3.134 7 7" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+          </svg>
+        </a>
+      {%- endif -%}
+
+      <!-- Cart -->
+      <a href="{{ routes.cart_url }}" class="header-icon" aria-label="{{ 'cart.general.title' | t }}">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+          <path d="M2 2h2l2.4 9.6a1 1 0 001 .8h7.2a1 1 0 001-.76L17 7H5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="8" cy="17" r="1" fill="currentColor"/>
+          <circle cx="14" cy="17" r="1" fill="currentColor"/>
+        </svg>
+        {%- if cart.item_count > 0 -%}
+          <span class="cart-count" aria-label="{{ cart.item_count }} {{ 'cart.general.items' | t }}">
+            {{ cart.item_count }}
+          </span>
+        {%- endif -%}
+      </a>
+
+      <!-- Hamburger (mobile only) -->
+      <button
+        class="hamburger header-icon"
+        aria-label="{{ 'general.accessibility.menu' | t }}"
+        aria-expanded="false"
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+
+  </div>
+</header>
+
+<!-- Search modal -->
+{%- if section.settings.show_search -%}
+<div id="search-modal" class="search-modal" role="dialog" aria-modal="true" aria-label="{{ 'general.search.placeholder' | t }}" aria-hidden="true">
+  <div class="search-modal__backdrop"></div>
+  <div class="search-modal__panel">
+    <form action="{{ routes.search_url }}" method="get" role="search" class="search-modal__form">
+      <input type="hidden" name="type" value="product">
+      <label for="search-modal-input" class="visually-hidden">{{ 'general.search.placeholder' | t }}</label>
+      <input
+        id="search-modal-input"
+        type="search"
+        name="q"
+        class="search-modal__input"
+        placeholder="{{ 'general.search.placeholder' | t }}"
+        autocomplete="off"
+        autocorrect="off"
+        spellcheck="false"
+      >
+      <button type="submit" class="search-modal__submit" aria-label="{{ 'general.search.placeholder' | t }}">
+        <svg width="20" height="20" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+          <circle cx="7.5" cy="7.5" r="5.5" stroke="currentColor" stroke-width="1.5"/>
+          <path d="M12 12l4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </form>
+    <button class="search-modal__close header-icon" aria-label="{{ 'general.accessibility.close' | t }}">
+      <svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+        <path d="M4 4l12 12M16 4L4 16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+    </button>
+  </div>
+</div>
+{%- endif -%}
+
+<!-- Mobile nav overlay -->
+<nav class="mobile-nav" role="navigation" aria-label="{{ 'general.accessibility.menu' | t }}" aria-hidden="true">
+  <button class="mobile-nav__close header-icon" aria-label="{{ 'general.accessibility.close' | t }}">
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+      <path d="M4 4l12 12M16 4L4 16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+    </svg>
+  </button>
+
+  <div class="mobile-nav__links">
+    {%- for link in linklists[section.settings.menu_left].links -%}
+      {%- if link.links != blank -%}
+        <div class="mobile-nav__group">
+          <button class="mobile-nav__parent" aria-expanded="false">
+            {{ link.title }}
+            <svg class="nav-item__chevron" width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true">
+              <path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+          <ul class="mobile-nav__children">
+            {%- for child_link in link.links -%}
+              <li><a href="{{ child_link.url }}"{% if child_link.url == request.path %} class="active"{% endif %}>{{ child_link.title }}</a></li>
+            {%- endfor -%}
+          </ul>
+        </div>
+      {%- else -%}
+        <a href="{{ link.url }}"{% if link.url == request.path %} class="active"{% endif %}>{{ link.title }}</a>
+      {%- endif -%}
+    {%- endfor -%}
+
+    {%- for link in linklists[section.settings.menu_right].links -%}
+      {%- if link.links != blank -%}
+        <div class="mobile-nav__group">
+          <button class="mobile-nav__parent" aria-expanded="false">
+            {{ link.title }}
+            <svg class="nav-item__chevron" width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true">
+              <path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+          <ul class="mobile-nav__children">
+            {%- for child_link in link.links -%}
+              <li><a href="{{ child_link.url }}"{% if child_link.url == request.path %} class="active"{% endif %}>{{ child_link.title }}</a></li>
+            {%- endfor -%}
+          </ul>
+        </div>
+      {%- else -%}
+        <a href="{{ link.url }}"{% if link.url == request.path %} class="active"{% endif %}>{{ link.title }}</a>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+</nav>
+
+{% stylesheet %}
+  /* ── Dropdown desktop ── */
+  .nav-item--has-dropdown {
+    position: relative;
+  }
+
+  .nav-item__toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: var(--font-body);
+    font-size: 0.72rem;
+    font-weight: 400;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-text);
+    padding: 0;
+    position: relative;
+  }
+
+  /* underline animato uguale agli <a> della header-nav */
+  .nav-item__toggle::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: var(--color-accent);
+    transition: width var(--transition-base);
+  }
+
+  .nav-item--has-dropdown:hover .nav-item__toggle::after,
+  .nav-item--has-dropdown.is-open .nav-item__toggle::after {
+    width: 100%;
+  }
+
+  .nav-item--has-dropdown:hover .nav-item__toggle,
+  .nav-item--has-dropdown.is-open .nav-item__toggle {
+    color: var(--color-accent);
+  }
+
+  .nav-item__chevron {
+    transition: transform 0.22s ease;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .nav-item--has-dropdown.is-open .nav-item__chevron {
+    transform: rotate(180deg);
+  }
+
+  /* Dropdown panel */
+  .nav-dropdown {
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+    position: absolute;
+    top: calc(100% + 1rem);
+    left: 50%;
+    transform: translateX(-50%) translateY(-4px);
+    min-width: 160px;
+    background: var(--color-bg);
+    border-top: 1px solid var(--color-accent);
+    list-style: none;
+    margin: 0;
+    padding: 0.75rem 0;
+    z-index: 300;
+    transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+    box-shadow: 0 12px 32px rgba(0,0,0,0.08);
+  }
+
+  /* piccolo triangolino decorativo */
+  .nav-dropdown::before {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 8px;
+    height: 8px;
+    background: var(--color-accent);
+    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+  }
+
+  .nav-item--has-dropdown.is-open .nav-dropdown {
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  .nav-dropdown li { display: block; }
+
+  .nav-dropdown a {
+    display: block;
+    padding: 0.45rem 1.5rem;
+    white-space: nowrap;
+    font-size: 0.68rem;
+    font-weight: 400;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-text);
+    text-decoration: none;
+    transition: color var(--transition-fast), padding-left var(--transition-fast);
+  }
+
+  .nav-dropdown a:hover,
+  .nav-dropdown a.active {
+    color: var(--color-accent);
+    padding-left: 1.85rem;
+  }
+
+  /* ── Header static (non sticky) ── */
+  .site-header--static {
+    position: relative;
+  }
+
+  /* ── Logo immagine (firma) ── */
+  .header-logo__img {
+    display: block;
+    height: 44px;
+    width: auto;
+    max-width: var(--logo-max-width, 200px);
+    object-fit: contain;
+  }
+
+  /* ── Mobile nav: accordion sottolivelli ── */
+  .mobile-nav__links {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+    width: 100%;
+    max-width: 320px;
+    padding: 0 1.5rem;
+  }
+
+  .mobile-nav__group {
+    width: 100%;
+    text-align: center;
+  }
+
+  .mobile-nav__parent {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: var(--font-heading);
+    font-size: 2.5rem;
+    color: var(--color-text);
+    transition: color var(--transition-fast);
+    padding: 0;
+    width: auto;
+  }
+
+  .mobile-nav__parent:hover,
+  .mobile-nav__parent[aria-expanded="true"] {
+    color: var(--color-accent);
+  }
+
+  .mobile-nav__parent .nav-item__chevron {
+    width: 14px;
+    height: 9px;
+    margin-top: 4px;
+  }
+
+  .mobile-nav__parent[aria-expanded="true"] .nav-item__chevron {
+    transform: rotate(180deg);
+  }
+
+  .mobile-nav__children {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.35s ease;
+  }
+
+  .mobile-nav__children.is-open {
+    max-height: 400px;
+  }
+
+  .mobile-nav__children li { display: block; }
+
+  .mobile-nav__children a {
+    display: block;
+    font-family: var(--font-body) !important;
+    font-size: 0.75rem !important;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-text) !important;
+    padding: 0.4rem 0;
+    transition: color var(--transition-fast);
+  }
+
+  .mobile-nav__children a:hover,
+  .mobile-nav__children a.active {
+    color: var(--color-accent) !important;
+  }
+
+  /* ── Mobile: semplifica l'header ── */
+  @media (max-width: 860px) {
+    .header-inner {
+      grid-template-columns: auto 1fr auto;
+    }
+
+    .header-inner > .header-nav {
+      display: none;
+    }
+
+    .header-logo {
+      justify-self: center;
+    }
+
+    .header-logo__img {
+      height: 36px;
+      max-width: 160px;
+    }
+
+    .header-logo__name {
+      font-size: 1.1rem;
+      white-space: nowrap;
+    }
+
+    .header-logo__tagline {
+      display: none;
+    }
+
+    .header-actions {
+      gap: 0.75rem;
+    }
+  }
+
+  @media (max-width: 400px) {
+    .header-logo__img {
+      height: 30px;
+      max-width: 130px;
+    }
+  }
+
+  /* ── Search modal ── */
+  .search-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    color: inherit;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .search-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 500;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    pointer-events: none;
+  }
+
+  .search-modal.is-open {
+    pointer-events: auto;
+  }
+
+  .search-modal__backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    opacity: 0;
+    transition: opacity 0.25s ease;
+  }
+
+  .search-modal.is-open .search-modal__backdrop {
+    opacity: 1;
+  }
+
+  .search-modal__panel {
+    position: relative;
+    width: 100%;
+    max-width: 680px;
+    margin-top: 80px;
+    background: var(--color-bg);
+    border-bottom: 2px solid var(--color-accent);
+    padding: 1.5rem 1.75rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    opacity: 0;
+    transform: translateY(-16px);
+    transition: opacity 0.25s ease, transform 0.25s ease;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.12);
+  }
+
+  .search-modal.is-open .search-modal__panel {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .search-modal__form {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    border-bottom: 1px solid var(--color-border, #e0d8cc);
+    padding-bottom: 0.5rem;
+  }
+
+  .search-modal__input {
+    flex: 1;
+    background: none;
+    border: none;
+    outline: none;
+    font-family: var(--font-heading);
+    font-size: 1.4rem;
+    color: var(--color-text);
+    letter-spacing: 0.02em;
+  }
+
+  .search-modal__input::placeholder {
+    color: var(--color-text-light, #999);
+    font-style: italic;
+  }
+
+  .search-modal__submit {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--color-accent);
+    display: inline-flex;
+    align-items: center;
+    padding: 0;
+    flex-shrink: 0;
+    transition: opacity var(--transition-fast);
+  }
+
+  .search-modal__submit:hover {
+    opacity: 0.7;
+  }
+
+  .search-modal__close {
+    flex-shrink: 0;
+  }
+
+  @media (max-width: 720px) {
+    .search-modal__panel {
+      margin-top: 64px;
+      padding: 1.25rem 1rem;
+    }
+
+    .search-modal__input {
+      font-size: 1.1rem;
+    }
+  }
+{% endstylesheet %}
+
+{% javascript %}
+  (function () {
+    function init() {
+      // ── Desktop dropdowns ──
+      var dropItems = document.querySelectorAll('.nav-item--has-dropdown');
+
+      function closeAllDropdowns() {
+        dropItems.forEach(function (el) {
+          el.classList.remove('is-open');
+          var t = el.querySelector('.nav-item__toggle');
+          if (t) t.setAttribute('aria-expanded', 'false');
+        });
+      }
+
+      dropItems.forEach(function (item) {
+        var toggle = item.querySelector('.nav-item__toggle');
+        if (!toggle) return;
+
+        toggle.addEventListener('click', function (e) {
+          e.stopPropagation();
+          var isOpen = item.classList.contains('is-open');
+          closeAllDropdowns();
+          if (!isOpen) {
+            item.classList.add('is-open');
+            toggle.setAttribute('aria-expanded', 'true');
+          }
+        });
+      });
+
+      document.addEventListener('click', closeAllDropdowns);
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') closeAllDropdowns();
+      });
+
+      // ── Mobile nav: accordion sottolivelli ──
+      var mobileParents = document.querySelectorAll('.mobile-nav__parent');
+
+      mobileParents.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var group = btn.closest('.mobile-nav__group');
+          var children = group.querySelector('.mobile-nav__children');
+          var isOpen = children.classList.contains('is-open');
+
+          // chiudi tutti gli altri gruppi
+          document.querySelectorAll('.mobile-nav__children.is-open').forEach(function (el) {
+            el.classList.remove('is-open');
+            el.closest('.mobile-nav__group').querySelector('.mobile-nav__parent').setAttribute('aria-expanded', 'false');
+          });
+
+          if (!isOpen) {
+            children.classList.add('is-open');
+            btn.setAttribute('aria-expanded', 'true');
+          }
+        });
+      });
+
+      // ── Search modal ──
+      var searchToggle = document.querySelector('.search-toggle');
+      var searchModal = document.getElementById('search-modal');
+      var searchInput = document.getElementById('search-modal-input');
+      var searchClose = searchModal && searchModal.querySelector('.search-modal__close');
+      var searchBackdrop = searchModal && searchModal.querySelector('.search-modal__backdrop');
+
+      function openSearch() {
+        searchModal.classList.add('is-open');
+        searchModal.setAttribute('aria-hidden', 'false');
+        searchToggle.setAttribute('aria-expanded', 'true');
+        document.body.style.overflow = 'hidden';
+        setTimeout(function () { searchInput.focus(); }, 50);
+      }
+
+      function closeSearch() {
+        searchModal.classList.remove('is-open');
+        searchModal.setAttribute('aria-hidden', 'true');
+        searchToggle.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
+        searchToggle.focus();
+      }
+
+      if (searchToggle && searchModal) {
+        searchToggle.addEventListener('click', openSearch);
+        if (searchClose) searchClose.addEventListener('click', closeSearch);
+        if (searchBackdrop) searchBackdrop.addEventListener('click', closeSearch);
+        searchModal.addEventListener('keydown', function (e) {
+          if (e.key === 'Escape') closeSearch();
+        });
+      }
+
+      // ── Mobile nav: aggiorna aria-hidden al toggle ──
+      var hamburger = document.querySelector('.hamburger');
+      var mobileNav = document.querySelector('.mobile-nav');
+      if (hamburger && mobileNav) {
+        hamburger.addEventListener('click', function () {
+          mobileNav.setAttribute('aria-hidden', 'false');
+        });
+        var closeBtn = mobileNav.querySelector('.mobile-nav__close');
+        if (closeBtn) {
+          closeBtn.addEventListener('click', function () {
+            mobileNav.setAttribute('aria-hidden', 'true');
+          });
+        }
+      }
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init);
+    } else {
+      init();
+    }
+  })();
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "t:sections.header.name",
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:headers.logo"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "t:labels.logo"
+    },
+    {
+      "type": "range",
+      "id": "logo_max_width",
+      "label": "t:labels.logo_max_width",
+      "min": 60,
+      "max": 300,
+      "step": 10,
+      "unit": "px",
+      "default": 180
+    },
+    {
+      "type": "text",
+      "id": "tagline",
+      "label": "t:labels.tagline",
+      "default": "Pasticceria Artigianale"
+    },
+    {
+      "type": "header",
+      "content": "t:headers.navigation"
+    },
+    {
+      "type": "link_list",
+      "id": "menu_left",
+      "label": "t:labels.menu_left",
+      "default": "main-menu"
+    },
+    {
+      "type": "link_list",
+      "id": "menu_right",
+      "label": "t:labels.menu_right",
+      "default": "main-menu"
+    },
+    {
+      "type": "header",
+      "content": "t:headers.behaviour"
+    },
+    {
+      "type": "checkbox",
+      "id": "sticky",
+      "label": "t:labels.sticky_header",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_search",
+      "label": "t:labels.show_search",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_account",
+      "label": "t:labels.show_account",
+      "default": false
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,113 @@
+{% comment %}
+  This section is used in the collection template to render collection page
+  listing all products within a collection.
+
+  https://shopify.dev/docs/storefronts/themes/architecture/templates/collection
+{% endcomment %}
+
+<section class="collection-section">
+  <div class="collection-container">
+    <header class="collection-header">
+      <h1 class="collection-title">{{ collection.title }}</h1>
+      {% if collection.description != blank %}
+        <div class="collection-description">
+          {{ collection.description }}
+        </div>
+      {% endif %}
+    </header>
+
+    <div class="collection-products">
+      {% paginate collection.products by 12 %}
+        <div class="collection-grid">
+          {% for product in collection.products %}
+            {% render 'product-card', product: product %}
+          {% endfor %}
+        </div>
+
+        {% if paginate.pages > 1 %}
+          <div class="collection-pagination">
+            {{ paginate | default_pagination }}
+          </div>
+        {% endif %}
+      {% endpaginate %}
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+  .collection-section {
+    padding: var(--spacing-2xl) var(--spacing-lg);
+    background: var(--color-brand-beige);
+    min-height: 60vh;
+  }
+
+  .collection-container {
+    max-width: var(--page-width);
+    margin: 0 auto;
+  }
+
+  .collection-header {
+    text-align: center;
+    margin-bottom: var(--spacing-2xl);
+  }
+
+  .collection-title {
+    color: var(--color-brand-brown);
+    margin-bottom: var(--spacing-md);
+  }
+
+  .collection-description {
+    max-width: 700px;
+    margin: 0 auto;
+    color: var(--color-text-light);
+    line-height: 1.7;
+  }
+
+  .collection-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: var(--spacing-xl);
+  }
+
+  .collection-pagination {
+    margin-top: var(--spacing-2xl);
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-sm);
+  }
+
+  .collection-pagination a, 
+  .collection-pagination span {
+    padding: var(--spacing-sm) var(--spacing-md);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-sm);
+    text-decoration: none;
+    color: var(--color-brand-brown);
+    transition: all var(--transition-base);
+  }
+
+  .collection-pagination .current {
+    background: var(--color-brand-gold);
+    color: var(--color-white);
+    border-color: var(--color-brand-gold);
+  }
+
+  .collection-pagination a:hover {
+    border-color: var(--color-brand-gold);
+    color: var(--color-brand-gold);
+  }
+
+  @media (max-width: 768px) {
+    .collection-grid {
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: var(--spacing-md);
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:general.collection",
+  "settings": []
+}
+{% endschema %}

@@ -1,0 +1,165 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin language editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "general": {
+    "404": "Non trovata",
+    "article": "Articolo",
+    "block": "Blocco",
+    "blog": "Blog",
+    "cart": "Carrello",
+    "collection": "Collezione",
+    "collections": "Collezioni",
+    "collection_card": "Card collezione",
+    "collections_grid": "Griglia collezioni",
+    "colors": "Colori",
+    "column": "Colonna",
+    "content": "Contenuto",
+    "custom_section": "Sezione personalizzata",
+    "fonts": "Font",
+    "footer": "Piè di pagina",
+    "group": "Gruppo",
+    "header": "Intestazione",
+    "layout": "Layout",
+    "main": "Principale",
+    "page": "Pagina",
+    "password": "Password",
+    "primary": "Primario",
+    "product": "Prodotto",
+    "row": "Riga",
+    "search": "Ricerca",
+    "secondary": "Secondario",
+    "section": "Sezione",
+    "settings": "Impostazioni",
+    "sidebar": "Barra laterale",
+    "text": "Testo",
+    "theme": "Tema",
+    "typography": "Tipografia"
+  },
+  "sections": {
+    "header": { "name": "Intestazione" },
+    "footer": { "name": "Piè di pagina" },
+    "hero": { "name": "Banner hero" },
+    "featured_collection": { "name": "Collezione in evidenza" },
+    "story": { "name": "Storia del brand" },
+    "services": { "name": "Griglia servizi" },
+    "newsletter": { "name": "Newsletter" },
+    "catering": { "name": "Catering" },
+    "events": { "name": "Eventi" },
+    "booking": { "name": "Prenotazioni" },
+    "product": { "name": "Prodotto" },
+    "product_grid": { "name": "Griglia prodotti" }
+  },
+  "blocks": {
+    "slide": { "name": "Slide" },
+    "service": { "name": "Card servizio" },
+    "highlight": { "name": "Statistica" },
+    "event_type": { "name": "Tipo evento" }
+  },
+  "labels": {
+    "alignment": "Allineamento",
+    "background": "Sfondo",
+    "foreground": "Primo piano",
+    "grid_gap": "Spaziatura griglia",
+    "grid_item_width": "Larghezza elemento griglia",
+    "input_corner_radius": "Raggio angoli input",
+    "layout_direction": "Direzione layout",
+    "menu": "Menu",
+    "menu_left": "Menu di navigazione sinistro",
+    "menu_right": "Menu di navigazione destro",
+    "menu_shop": "Menu shop",
+    "menu_services": "Menu servizi",
+    "menu_legal": "Menu legale",
+    "customer_account_menu": "Menu account cliente",
+    "padding": "Padding",
+    "page_margin": "Margine pagina",
+    "page_width": "Larghezza pagina",
+    "show_payment_icons": "Mostra icone pagamento",
+    "text_style": "Stile testo",
+    "text": "Testo",
+    "logo": "Logo",
+    "tagline": "Slogan",
+    "favicon": "Favicon",
+    "description": "Descrizione",
+    "address": "Indirizzo",
+    "phone": "Numero di telefono",
+    "email": "Indirizzo email",
+    "instagram": "URL Instagram",
+    "facebook": "URL Facebook",
+    "image": "Immagine",
+    "eyebrow": "Sopratitolo",
+    "title": "Titolo",
+    "subtitle": "Sottotitolo",
+    "cta_label": "Testo pulsante",
+    "cta_url": "URL pulsante",
+    "link": "URL link",
+    "show_scroll": "Mostra indicatore scroll",
+    "overlay_opacity": "Opacità overlay immagine",
+    "collection": "Collezione",
+    "products_count": "Numero di prodotti",
+    "columns": "Colonne",
+    "show_cta": "Mostra pulsante CTA",
+    "image_position": "Posizione immagine",
+    "signature": "Firma",
+    "email_placeholder": "Placeholder email",
+    "button": "Testo pulsante",
+    "privacy_note": "Nota privacy",
+    "show_filters": "Mostra filtri",
+    "hours": "Orari di apertura",
+    "number": "Numero / Statistica",
+    "label": "Etichetta",
+    "logo_max_width": "Larghezza massima logo",
+    "sticky_header": "Header fisso (sticky)",
+    "show_search": "Mostra icona ricerca",
+    "show_account": "Mostra icona account",
+    "privacy_label": "Testo checkbox privacy",
+    "privacy_label_info": "Scrivi \"Privacy Policy\" nel testo per collegarlo automaticamente alla pagina impostata sotto",
+    "privacy_url": "URL pagina Privacy Policy",
+    "max_height": "Altezza massima",
+    "autoplay": "Riproduzione automatica",
+    "autoplay_speed": "Velocità riproduzione automatica",
+    "show_dots": "Mostra navigazione a punti",
+    "show_arrows": "Mostra frecce"
+  },
+  "options": {
+    "alignment": {
+      "left": "Sinistra",
+      "center": "Centro",
+      "right": "Destra"
+    },
+    "direction": {
+      "horizontal": "Orizzontale",
+      "vertical": "Verticale"
+    },
+    "page_width": {
+      "narrow": "Stretto",
+      "wide": "Largo"
+    },
+    "size": {
+      "large": "Grande",
+      "small": "Piccolo"
+    },
+    "text_style": {
+      "title": "Titolo",
+      "subtitle": "Sottotitolo",
+      "normal": "Testo normale"
+    },
+    "white": "Bianco",
+    "soft": "Beige chiaro",
+    "left": "Sinistra",
+    "right": "Destra"
+  },
+  "headers": {
+    "hero": "Sezione hero",
+    "content": "Sezione contenuto",
+    "logo": "Logo",
+    "navigation": "Navigazione",
+    "behaviour": "Comportamento"
+  }
+}

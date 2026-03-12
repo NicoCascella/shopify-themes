@@ -1,0 +1,245 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin language editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "404": {
+    "title": "404",
+    "not_found": "Page not found.",
+    "back_to_shopping": "Back to shopping"
+  },
+  "blog": {
+    "article_comments": "Comments",
+    "article_metadata_html": "{{ date }} by {{ author }}",
+    "comment_form_body": "Comment",
+    "comment_form_email": "Email",
+    "comment_form_name": "Name",
+    "comment_form_submit": "Post",
+    "comment_form_title": "Add a comment"
+  },
+  "cart": {
+    "checkout": "Proceed to checkout",
+    "title": "Your cart",
+    "update": "Update cart",
+    "remove": "Remove",
+    "order_summary": "Order summary",
+    "subtotal": "Subtotal",
+    "shipping_note": "Taxes and shipping calculated at checkout",
+    "empty": "Your cart is empty",
+    "empty_description": "Discover our artisanal creations and add something special.",
+    "item_count_one": "{{ count }} item",
+    "item_count_other": "{{ count }} items",
+    "general": {
+      "title": "Cart",
+      "items": "items"
+    }
+  },
+  "customers": {
+    "login": {
+      "email": "Email",
+      "password": "Password",
+      "submit": "Sign in",
+      "title": "Login"
+    }
+  },
+  "collections": {
+    "title": "Collections"
+  },
+  "collection": {
+    "eyebrow": "Our products",
+    "all": "All",
+    "sort": "Sort by",
+    "empty": "No products found in this collection."
+  },
+  "gift_card": {
+    "add_to_apple_wallet": "Add to Apple Wallet",
+    "card": "Gift card",
+    "expired": "This gift card has expired",
+    "expires_on": "Expires on {{ expires_on }}",
+    "use_at_checkout": "Use this gift card at checkout"
+  },
+  "password": {
+    "title": "This shop is private",
+    "password": "Password",
+    "enter": "Enter"
+  },
+  "search": {
+    "title": "Search",
+    "placeholder": "Search products, pages…",
+    "submit": "Search",
+    "no_results_html": "No results found for {{ terms }}",
+    "results_for_html": "{{ count }} results found for {{ terms }}",
+    "type_article": "Article",
+    "type_page": "Page"
+  },
+  "general": {
+    "view_all": "View all",
+    "continue_shopping": "Continue shopping",
+    "menu": "Menu",
+    "close": "Close",
+    "search": {
+      "placeholder": "Search"
+    },
+    "accessibility": {
+      "menu": "Open menu",
+      "close": "Close menu",
+      "mobile_nav": "Mobile navigation",
+      "nav_left": "Primary navigation",
+      "nav_right": "Secondary navigation",
+      "skip_to_content": "Skip to content",
+      "account": "My account",
+      "prev_slide": "Previous slide",
+      "next_slide": "Next slide",
+      "go_to_slide": "Go to slide {{ index }}"
+    }
+  },
+  "sections": {
+    "header": { "name": "Header" },
+    "footer": { "name": "Footer" },
+    "hero": { "name": "Hero Banner" },
+    "featured_collection": { "name": "Featured Collection" },
+    "story": { "name": "Brand Story" },
+    "services": { "name": "Services Grid" },
+    "newsletter": { "name": "Newsletter" },
+    "catering": { "name": "Catering" },
+    "events": { "name": "Events" },
+    "booking": { "name": "Booking" },
+    "product": { "name": "Product" },
+    "product_grid": { "name": "Product Grid" },
+    "product_recommendations": {
+      "name": "Product recommendations",
+      "title": "You might also like"
+    }
+  },
+  "blocks": {
+    "slide": { "name": "Slide" },
+    "service": { "name": "Service card" },
+    "highlight": { "name": "Highlight" },
+    "event_type": { "name": "Event type" },
+    "product_feature": { "name": "Feature point" }
+  },
+  "labels": {
+    "logo": "Logo",
+    "tagline": "Tagline",
+    "menu_left": "Left menu",
+    "menu_right": "Right menu",
+    "menu_shop": "Shop menu",
+    "menu_services": "Services menu",
+    "menu_legal": "Legal menu",
+    "description": "Description",
+    "address": "Address",
+    "phone": "Phone",
+    "email": "Email",
+    "instagram": "Instagram URL",
+    "facebook": "Facebook URL",
+    "image": "Image",
+    "eyebrow": "Eyebrow text",
+    "title": "Title",
+    "subtitle": "Subtitle",
+    "text": "Text",
+    "cta_label": "Button label",
+    "cta_url": "Button URL",
+    "link": "Link URL",
+    "show_scroll": "Show scroll indicator",
+    "overlay_opacity": "Overlay opacity",
+    "collection": "Collection",
+    "products_count": "Number of products",
+    "columns": "Columns",
+    "background": "Background",
+    "show_cta": "Show CTA button",
+    "image_position": "Image position",
+    "signature": "Signature text",
+    "email_placeholder": "Email placeholder",
+    "button": "Button label",
+    "privacy_note": "Privacy note",
+    "show_filters": "Show filters",
+    "hours": "Opening hours",
+    "number": "Number/Stat",
+    "label": "Label",
+    "logo_max_width": "Logo max width",
+    "sticky_header": "Sticky header",
+    "show_search": "Show search icon",
+    "show_account": "Show account icon",
+    "privacy_label": "Privacy checkbox label",
+    "privacy_label_info": "Write \"Privacy Policy\" in the text to automatically link it to the page set below",
+    "privacy_url": "Privacy Policy page URL",
+    "icon": "Icon (emoji or symbol)",
+    "icon_info": "Paste an emoji or symbol, e.g. ✦ ★ 🌿",
+    "max_height": "Max height",
+    "autoplay": "Autoplay",
+    "autoplay_speed": "Autoplay speed",
+    "show_dots": "Show dot navigation",
+    "show_arrows": "Show arrows"
+  },
+  "options": {
+    "white": "White",
+    "soft": "Soft beige",
+    "left": "Left",
+    "right": "Right"
+  },
+  "headers": {
+    "hero": "Hero section",
+    "content": "Content section",
+    "logo": "Logo",
+    "navigation": "Navigation",
+    "behaviour": "Behaviour"
+  },
+  "footer": {
+    "shop": "Shop",
+    "services": "Services",
+    "contact": "Contact",
+    "rights": "All rights reserved."
+  },
+  "newsletter": {
+    "email": "Email address",
+    "success": "Subscribed!",
+    "privacy_label": "I have read and accept the Privacy Policy"
+  },
+  "booking": {
+    "name": "Full name",
+    "email": "Email address",
+    "phone": "Phone number",
+    "date": "Event date",
+    "event_type": "Event type",
+    "select": "Select",
+    "wedding": "Wedding",
+    "birthday": "Birthday",
+    "catering": "Catering",
+    "corporate": "Corporate event",
+    "other": "Other",
+    "message": "Message",
+    "message_placeholder": "Tell us about your event…",
+    "hours": "Opening hours",
+    "address": "Where to find us"
+  },
+  "products": {
+    "product": "Product",
+    "sale": "Sale"
+  },
+  "product": {
+    "add_to_cart": "Add to cart",
+    "sold_out": "Sold out",
+    "added": "Added!",
+    "view": "View product",
+    "sale": "Sale",
+    "new": "New",
+    "type": "Type",
+    "brand": "Brand",
+    "tags": "Tags",
+    "quantity": "Quantity",
+    "quantity_minus": "Decrease quantity",
+    "quantity_plus": "Increase quantity",
+    "allergens": {
+      "ingredients_title": "Ingredients",
+      "allergens_title": "Allergens",
+      "contains": "This product contains the following allergens:",
+      "may_contain": "May contain traces of",
+      "disclaimer": "Always check the label before consuming. Information may vary by production batch."
+    }
+  }
+}

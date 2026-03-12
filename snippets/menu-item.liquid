@@ -1,0 +1,19 @@
+{% doc %}
+  Renders a single navigation menu item with optional active state.
+
+  @param {link} link - The Shopify link object
+  @param {string} [class] - Additional CSS class
+
+  @example
+  {% for link in linklists['main-menu'].links %}
+    {% render 'menu-item', link: link %}
+  {% endfor %}
+{% enddoc %}
+
+<a
+  href="{{ link.url }}"
+  class="{{ class }}{% if link.url == request.path %} active{% endif %}"
+  {% if link.url == request.path %}aria-current="page"{% endif %}
+>
+  {{ link.title }}
+</a>

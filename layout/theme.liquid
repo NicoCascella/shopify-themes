@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#615140">
+
+  <!-- ── Title ── -->
+  <title>
+    {%- if page_title == shop.name -%}
+      {{ shop.name }} — Pasticceria Artigianale
+    {%- else -%}
+      {{ page_title }} — {{ shop.name }}
+    {%- endif -%}
+  </title>
+
+  <!-- ── Meta description & canonical ── -->
+  {%- if page_description -%}
+    <meta name="description" content="{{ page_description | escape }}">
+  {%- endif -%}
+  <link rel="canonical" href="{{ canonical_url }}">
+
+  <!-- ── Favicon ── -->
+  {%- if settings.favicon -%}
+    <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
+  {%- endif -%}
+
+  <!-- ── Open Graph ── -->
+  <meta property="og:site_name" content="{{ shop.name | escape }}">
+  <meta property="og:url" content="{{ canonical_url }}">
+  <meta property="og:title" content="{{ page_title | escape }}">
+  <meta property="og:type" content="website">
+  {%- if page_description -%}
+    <meta property="og:description" content="{{ page_description | escape }}">
+  {%- endif -%}
+  {%- assign og_img = page_image | default: settings.og_image -%}
+  {%- if og_img -%}
+    <meta property="og:image" content="{{ og_img | image_url: width: 1200 }}">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:alt" content="{{ page_title | escape }}">
+  {%- endif -%}
+  <meta property="og:locale" content="{{ request.locale.iso_code | replace: '-', '_' }}">
+
+  <!-- ── Twitter Card ── -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="{{ page_title | escape }}">
+  {%- if page_description -%}
+    <meta name="twitter:description" content="{{ page_description | escape }}">
+  {%- endif -%}
+  {%- if og_img -%}
+    <meta name="twitter:image" content="{{ og_img | image_url: width: 1200 }}">
+  {%- endif -%}
+
+  <!-- ── JSON-LD: Bakery / LocalBusiness ── -->
+  {%- capture ld_address -%}
+    {%- if settings.seo_address_street != blank -%}
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "{{ settings.seo_address_street | escape }}",
+        "addressLocality": "{{ settings.seo_address_city | default: '' | escape }}",
+        "postalCode": "{{ settings.seo_address_postal | default: '' | escape }}",
+        "addressCountry": "{{ settings.seo_address_country | default: 'IT' | escape }}"
+      },
+    {%- endif -%}
+  {%- endcapture -%}
+
+  {%- capture ld_geo -%}
+    {%- if settings.seo_latitude != blank and settings.seo_longitude != blank -%}
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": {{ settings.seo_latitude }},
+        "longitude": {{ settings.seo_longitude }}
+      },
+    {%- endif -%}
+  {%- endcapture -%}
+
+  {%- capture ld_hours -%}
+    {%- assign hours_list = '' -%}
+    {%- if settings.seo_hours_weekdays != blank -%}
+      {%- assign hours_list = hours_list | append: '"' | append: settings.seo_hours_weekdays | append: '"' -%}
+    {%- endif -%}
+    {%- if settings.seo_hours_saturday != blank -%}
+      {%- unless hours_list == '' -%}{%- assign hours_list = hours_list | append: ',' -%}{%- endunless -%}
+      {%- assign hours_list = hours_list | append: '"' | append: settings.seo_hours_saturday | append: '"' -%}
+    {%- endif -%}
+    {%- if settings.seo_hours_sunday != blank -%}
+      {%- unless hours_list == '' -%}{%- assign hours_list = hours_list | append: ',' -%}{%- endunless -%}
+      {%- assign hours_list = hours_list | append: '"' | append: settings.seo_hours_sunday | append: '"' -%}
+    {%- endif -%}
+    {%- unless hours_list == '' -%}
+      "openingHours": [{{ hours_list }}],
+    {%- endunless -%}
+  {%- endcapture -%}
+
+  {%- capture ld_image -%}
+    {%- if settings.og_image -%}
+      "image": "{{ settings.og_image | image_url: width: 1200 }}",
+    {%- endif -%}
+  {%- endcapture -%}
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Bakery",
+    "name": "{{ settings.seo_business_name | default: shop.name | escape }}",
+    "url": "{{ shop.url }}",
+    {{ ld_image }}
+    "description": "{{ shop.description | default: '' | escape }}",
+    {{ ld_address }}
+    {{ ld_geo }}
+    {{ ld_hours }}
+    "telephone": "{{ settings.seo_phone | default: '' | escape }}",
+    "email": "{{ settings.seo_email | default: '' | escape }}",
+    "servesCuisine": "Pasticceria artigianale italiana",
+    "priceRange": "{{ settings.seo_price_range | default: '€€' }}",
+    "currenciesAccepted": "EUR",
+    "paymentAccepted": "Cash, Credit Card"
+  }
+  </script>
+
+  <!-- ── JSON-LD: Product ── -->
+  {%- if request.page_type == 'product' -%}
+    {%- assign currency = cart.currency.iso_code -%}
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Product",
+      "name": {{ product.title | json }},
+      "url": {{ shop.url | append: product.url | json }},
+      "description": {{ product.description | strip_html | truncate: 500 | json }},
+      "sku": {{ product.selected_or_first_available_variant.sku | default: product.id | json }},
+      "brand": {
+        "@type": "Brand",
+        "name": {{ product.vendor | default: shop.name | json }}
+      },
+      "image": [
+        {%- for image in product.images limit: 5 -%}
+          {{ image | image_url: width: 1200 | prepend: 'https:' | json }}{%- unless forloop.last -%},{%- endunless -%}
+        {%- endfor -%}
+      ],
+      "offers": [
+        {%- for variant in product.variants -%}
+        {
+          "@type": "Offer",
+          "name": {{ variant.title | json }},
+          "sku": {{ variant.sku | default: variant.id | json }},
+          "price": {{ variant.price | divided_by: 100.0 | json }},
+          "priceCurrency": {{ currency | json }},
+          "availability": {% if variant.available %}"https://schema.org/InStock"{% else %}"https://schema.org/OutOfStock"{% endif %},
+          "itemCondition": "https://schema.org/NewCondition",
+          "url": {{ shop.url | append: product.url | append: '?variant=' | append: variant.id | json }},
+          "seller": {
+            "@type": "Organization",
+            "name": {{ shop.name | json }}
+          },
+          "hasMerchantReturnPolicy": {
+            "@type": "MerchantReturnPolicy",
+            "applicableCountry": "IT",
+            "returnPolicyCategory": "https://schema.org/MerchantReturnFiniteReturnWindow",
+            "merchantReturnDays": 14,
+            "returnMethod": "https://schema.org/ReturnByMail",
+            "returnFees": "https://schema.org/FreeReturn"
+          },
+          "shippingDetails": {
+            "@type": "OfferShippingDetails",
+            "shippingRate": {
+              "@type": "MonetaryAmount",
+              "currency": {{ currency | json }},
+              "value": "0"
+            },
+            "shippingDestination": {
+              "@type": "DefinedRegion",
+              "addressCountry": "IT"
+            },
+            "deliveryTime": {
+              "@type": "ShippingDeliveryTime",
+              "handlingTime": {
+                "@type": "QuantitativeValue",
+                "minValue": 1,
+                "maxValue": 2,
+                "unitCode": "DAY"
+              },
+              "transitTime": {
+                "@type": "QuantitativeValue",
+                "minValue": 1,
+                "maxValue": 3,
+                "unitCode": "DAY"
+              }
+            }
+          }
+        }{%- unless forloop.last -%},{%- endunless -%}
+        {%- endfor -%}
+      ]
+    }
+    </script>
+  {%- endif -%}
+
+  <!-- ── Fonts ── -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+
+  {{ 'theme.css' | asset_url | stylesheet_tag }}
+
+  {{ content_for_header }}
+
+  {%- if settings.custom_css != blank -%}
+    <style>{{ settings.custom_css }}</style>
+  {%- endif -%}
+</head>
+
+<body class="template-{{ template.name | handleize }}">
+
+  <a class="skip-to-content" href="#main-content">{{ 'general.accessibility.skip_to_content' | t }}</a>
+
+  {%- if settings.show_announcement and settings.announcement_text != blank -%}
+    <div class="announcement-bar">{{ settings.announcement_text }}</div>
+  {%- endif -%}
+
+  {% section 'header' %}
+
+  <main id="main-content" role="main" tabindex="-1">
+    {{ content_for_layout }}
+  </main>
+
+  {% section 'footer' %}
+
+  <script src="{{ 'theme.js' | asset_url }}" defer></script>
+
+</body>
+</html>

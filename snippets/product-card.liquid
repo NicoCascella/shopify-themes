@@ -1,0 +1,52 @@
+{% doc %}
+  Renders a product card with image, badge, title, price and hover CTA.
+
+  @param {product} product - The product object
+  @param {string} [image_ratio] - Optional CSS aspect-ratio override (e.g. '1/1')
+
+  @example
+  {% render 'product-card', product: product %}
+{% enddoc %}
+
+<article class="product-card">
+  <a href="{{ product.url }}" aria-label="{{ product.title | escape }}">
+
+    <div class="product-card__media" style="{% if image_ratio %}aspect-ratio:{{ image_ratio }}{% endif %}">
+      {%- if product.featured_image -%}
+        <img
+          src="{{ product.featured_image | image_url: width: 800 }}"
+          alt="{{ product.featured_image.alt | default: product.title | escape }}"
+          loading="lazy"
+          width="{{ product.featured_image.width }}"
+          height="{{ product.featured_image.height }}"
+        >
+      {%- else -%}
+        {{ 'product-1' | placeholder_svg_tag }}
+      {%- endif -%}
+
+      {%- if product.compare_at_price > product.price -%}
+        <span class="product-card__badge">{{ 'product.sale' | t }}</span>
+      {%- elsif product.tags contains 'new' or product.tags contains 'nuovo' -%}
+        <span class="product-card__badge">{{ 'product.new' | t }}</span>
+      {%- endif -%}
+
+      <span class="product-card__cta">{{ 'product.view' | t }}</span>
+    </div>
+
+    <div class="product-card__info">
+      {%- if product.vendor != blank -%}
+        <p class="product-card__vendor">{{ product.vendor }}</p>
+      {%- endif -%}
+
+      <h3 class="product-card__title">{{ product.title }}</h3>
+
+      <p class="product-card__price">
+        {%- if product.compare_at_price > product.price -%}
+          <s>{{ product.compare_at_price | money }}</s>
+        {%- endif -%}
+        <span>{{ product.price | money }}</span>
+      </p>
+    </div>
+
+  </a>
+</article>

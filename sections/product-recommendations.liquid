@@ -1,0 +1,93 @@
+<div
+  class="product-recommendations"
+  data-url="{{ routes.product_recommendations_url }}"
+  data-product-id="{{ product.id }}"
+  data-limit="{{ section.settings.products_to_show }}"
+  data-section-id="{{ section.id }}"
+>
+  {%- if recommendations.performed and recommendations.products_count > 0 -%}
+    <div class="product-recommendations__inner">
+      <h2 class="product-recommendations__title">
+        {{ 'sections.product_recommendations.title' | t }}
+      </h2>
+      <div class="product-recommendations__grid">
+        {%- for product in recommendations.products -%}
+          {% render 'product-card', product: product %}
+        {%- endfor -%}
+      </div>
+    </div>
+  {%- endif -%}
+</div>
+
+{% stylesheet %}
+  .product-recommendations {
+    padding: 60px 0;
+  }
+
+  .product-recommendations__title {
+    font-family: var(--font-heading);
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    color: var(--color-text);
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  .product-recommendations__grid {
+    display: grid;
+    grid-template-columns: repeat(var(--columns, 4), 1fr);
+    gap: 24px;
+    padding: 0 var(--page-padding, 40px);
+    max-width: var(--page-width, 1400px);
+    margin: 0 auto;
+  }
+
+  @media (max-width: 900px) {
+    .product-recommendations__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 480px) {
+    .product-recommendations__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+{% endstylesheet %}
+
+{% javascript %}
+  (function() {
+    const section = document.querySelector('.product-recommendations[data-product-id]');
+    if (!section) return;
+
+    const { url, productId, limit, sectionId } = section.dataset;
+
+    fetch(`${url}?section_id=${sectionId}&product_id=${productId}&limit=${limit}`)
+      .then(function(res) { return res.text(); })
+      .then(function(html) {
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, 'text/html');
+        const inner = doc.querySelector('.product-recommendations__inner');
+        if (inner) {
+          section.innerHTML = inner.outerHTML;
+        }
+      })
+      .catch(function() {});
+  })();
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "t:sections.product_recommendations.name",
+  "settings": [
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "label": "t:labels.products_count",
+      "min": 2,
+      "max": 8,
+      "step": 1,
+      "default": 4
+    }
+  ]
+}
+{% endschema %}

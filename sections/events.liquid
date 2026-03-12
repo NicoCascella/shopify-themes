@@ -1,0 +1,165 @@
+{% doc %}
+  Events page section — editorial layout for private events and celebrations.
+
+  @example
+  {% section 'events' %}
+{% enddoc %}
+
+<section class="page-hero">
+  <div class="page-hero__media">
+    {%- if section.settings.hero_image -%}
+      <img
+        src="{{ section.settings.hero_image | image_url: width: 2400 }}"
+        alt="{{ section.settings.hero_image.alt | default: 'Eventi' | escape }}"
+        loading="eager"
+        fetchpriority="high"
+      >
+    {%- else -%}
+      {{ 'lifestyle-1' | placeholder_svg_tag }}
+    {%- endif -%}
+    <div class="page-hero__overlay"></div>
+  </div>
+  <div class="container">
+    <div class="page-hero__content fade-in">
+      <span class="eyebrow" style="color:rgba(255,255,255,.65)">{{ section.settings.eyebrow }}</span>
+      <h1>{{ section.settings.hero_title }}</h1>
+      <p style="color:rgba(255,255,255,.8);margin-top:1rem;font-size:.95rem;max-width:48ch">{{ section.settings.hero_subtitle }}</p>
+    </div>
+  </div>
+</section>
+
+<section class="page-content section">
+  <div class="container">
+
+    <!-- Event types -->
+    {%- for block in section.blocks -%}
+      {%- assign is_even = forloop.index0 | modulo: 2 -%}
+      <div class="editorial-grid fade-in {% if is_even == 1 %}editorial-grid--reverse{% endif %}" style="margin-bottom:var(--space-xl)" {{ block.shopify_attributes }}>
+        <div class="editorial-image">
+          {%- if block.settings.image -%}
+            <img
+              src="{{ block.settings.image | image_url: width: 900 }}"
+              alt="{{ block.settings.image.alt | default: block.settings.title | escape }}"
+              loading="lazy"
+            >
+          {%- else -%}
+            {{ 'product-2' | placeholder_svg_tag }}
+          {%- endif -%}
+        </div>
+        <div class="editorial-text">
+          {%- if block.settings.eyebrow != blank -%}
+            <span class="eyebrow">{{ block.settings.eyebrow }}</span>
+          {%- endif -%}
+          <h2>{{ block.settings.title }}</h2>
+          <div class="section-divider"></div>
+          <p>{{ block.settings.text }}</p>
+          {%- if block.settings.cta_label != blank -%}
+            <div style="margin-top:1.75rem">
+              <a href="{{ block.settings.cta_url | default: '/pages/prenotazioni' }}" class="btn btn--accent">
+                <span>{{ block.settings.cta_label }}</span>
+              </a>
+            </div>
+          {%- endif -%}
+        </div>
+      </div>
+    {%- endfor -%}
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "t:sections.events.name",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "t:labels.image"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "t:labels.eyebrow",
+      "default": "Eventi privati"
+    },
+    {
+      "type": "text",
+      "id": "hero_title",
+      "label": "t:labels.title",
+      "default": "Celebra con noi"
+    },
+    {
+      "type": "text",
+      "id": "hero_subtitle",
+      "label": "t:labels.subtitle",
+      "default": "Torte su misura, buffet dolci e degustazioni per matrimoni, compleanni e ricorrenze speciali."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "event_type",
+      "name": "t:blocks.event_type.name",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "t:labels.image"
+        },
+        {
+          "type": "text",
+          "id": "eyebrow",
+          "label": "t:labels.eyebrow"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "t:labels.title",
+          "default": "Matrimoni"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "t:labels.text",
+          "default": "<p>La torta del vostro giorno più importante merita la massima cura. Lavoriamo con voi per creare qualcosa di unico e indimenticabile.</p>"
+        },
+        {
+          "type": "text",
+          "id": "cta_label",
+          "label": "t:labels.cta_label",
+          "default": "Prenota una consulenza"
+        },
+        {
+          "type": "url",
+          "id": "cta_url",
+          "label": "t:labels.link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.events.name",
+      "blocks": [
+        {
+          "type": "event_type",
+          "settings": {
+            "eyebrow": "Cerimonie",
+            "title": "Matrimoni & anniversari",
+            "text": "<p>La torta del vostro giorno più importante merita la massima cura. Lavoriamo con voi per creare qualcosa di unico e indimenticabile.</p>",
+            "cta_label": "Prenota una consulenza"
+          }
+        },
+        {
+          "type": "event_type",
+          "settings": {
+            "eyebrow": "Festeggiamenti",
+            "title": "Compleanni & ricorrenze",
+            "text": "<p>Dolci su misura per ogni età e ogni occasione. Torte a piani, monoporzioni, macarons e buffet dolci personalizzati.</p>",
+            "cta_label": "Scopri le opzioni"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

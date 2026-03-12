@@ -1,0 +1,17 @@
+{% doc %}
+  Renders an anchor button with configurable style variant.
+
+  @param {string} label - Button text
+  @param {string} url - Destination URL
+  @param {string} [variant] - Style variant: 'dark' | 'light' | 'accent' | 'filled' (default: 'accent')
+  @param {string} [class] - Additional CSS classes
+
+  @example
+  {% render 'button', label: 'Scopri', url: '/collections/all', variant: 'accent' %}
+{% enddoc %}
+
+{%- assign btn_variant = variant | default: 'accent' -%}
+
+<a href="{{ url }}" class="btn btn--{{ btn_variant }} {{ class }}">
+  <span>{{ label }}</span>
+</a>

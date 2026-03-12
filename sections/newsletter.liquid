@@ -1,0 +1,238 @@
+{% doc %}
+  Newsletter signup section with accent background.
+
+  @example
+  {% section 'newsletter' %}
+{% enddoc %}
+
+<section class="newsletter section">
+  <div class="container">
+    <div class="fade-in">
+      {%- if section.settings.eyebrow != blank -%}
+        <span class="eyebrow">{{ section.settings.eyebrow }}</span>
+      {%- endif -%}
+      {%- if section.settings.title != blank -%}
+        <h2>{{ section.settings.title }}</h2>
+      {%- endif -%}
+      {%- if section.settings.subtitle != blank -%}
+        <p style="color:rgba(255,255,255,.7);margin-top:.5rem;font-size:.88rem">{{ section.settings.subtitle }}</p>
+      {%- endif -%}
+    </div>
+
+    {%- form 'customer', class: 'newsletter-form fade-in' -%}
+      <input type="hidden" name="contact[tags]" value="newsletter">
+      <div class="newsletter-form__row">
+        <input
+          type="email"
+          name="contact[email]"
+          placeholder="{{ section.settings.placeholder | default: 'La tua email' }}"
+          required
+          autocomplete="email"
+          aria-label="{{ 'newsletter.email' | t }}"
+        >
+        <button
+          type="submit"
+          data-submit-text="{{ section.settings.button_label }}"
+          data-success-text="{{ 'newsletter.success' | t }}"
+        >
+          {{ section.settings.button_label }}
+        </button>
+      </div>
+
+      <label class="newsletter-form__privacy">
+        <input
+          type="checkbox"
+          name="contact[privacy]"
+          required
+          aria-required="true"
+        >
+        <span>
+          {%- if section.settings.privacy_label != blank -%}
+            {%- assign privacy_text = section.settings.privacy_label -%}
+          {%- else -%}
+            {%- assign privacy_text = 'newsletter.privacy_label' | t -%}
+          {%- endif -%}
+          {%- if section.settings.privacy_url != blank -%}
+            {{ privacy_text | replace: 'Privacy Policy', '<a href="' | append: section.settings.privacy_url | append: '" target="_blank" rel="noopener">Privacy Policy</a>' }}
+          {%- else -%}
+            {{ privacy_text }}
+          {%- endif -%}
+        </span>
+      </label>
+    {%- endform -%}
+
+    {%- if section.settings.privacy_note != blank -%}
+      <p class="newsletter__note">
+        {{ section.settings.privacy_note }}
+      </p>
+    {%- endif -%}
+
+  </div>
+</section>
+
+{% stylesheet %}
+  /* ── Form: colonna (input row + checkbox sotto) ── */
+  .newsletter-form {
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ── Form: riga email + bottone ── */
+  .newsletter-form__row {
+    display: flex;
+    gap: 0;
+  }
+
+  /* ── Checkbox privacy — posizionato SOTTO la riga ── */
+  .newsletter-form__privacy {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    margin-top: 1.25rem;
+    max-width: 480px;
+    cursor: pointer;
+  }
+
+  /* Checkbox ridisegnato in stile tema */
+  .newsletter-form__privacy input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    flex-shrink: 0;
+    width: 12px !important;
+    height: 12px !important;
+    min-width: 12px;
+    min-height: 12px;
+    max-width: 12px;
+    max-height: 12px;
+    box-sizing: border-box;
+    margin-top: 2px;
+    padding: 0;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    background: transparent;
+    cursor: pointer;
+    transition: border-color 0.2s ease, background 0.2s ease;
+    position: relative;
+  }
+
+  /* Segno di spunta gold al check */
+  .newsletter-form__privacy input[type="checkbox"]:checked {
+    border-color: rgba(255, 255, 255, 0.8);
+    background-color: transparent;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 10 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 4l3 3 5-6' stroke='%23ffffff' stroke-width='1.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 9px 7px;
+  }
+
+  .newsletter-form__privacy input[type="checkbox"]:focus-visible {
+    outline: 1px solid rgba(255, 255, 255, 0.5);
+    outline-offset: 3px;
+  }
+
+  /* Testo del label */
+  .newsletter-form__privacy span {
+    font-family: var(--font-body);
+    font-size: 0.7rem;
+    font-weight: 300;
+    letter-spacing: 0.08em;
+    color: rgba(255, 255, 255, 0.55);
+    line-height: 1.6;
+    text-transform: uppercase;
+  }
+
+  /* Link privacy policy nel testo */
+  .newsletter-form__privacy span a {
+    color: rgba(255, 255, 255, 0.85);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    padding-bottom: 1px;
+    transition: color 0.15s ease, border-color 0.15s ease;
+  }
+
+  .newsletter-form__privacy span a:hover {
+    color: #fff;
+    border-bottom-color: rgba(255, 255, 255, 0.7);
+  }
+
+  /* Nota sotto il form */
+  .newsletter__note {
+    max-width: 480px;
+    margin-top: 1rem;
+    font-size: 0.62rem;
+    font-weight: 300;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.3);
+  }
+
+  /* Mobile */
+  @media (max-width: 640px) {
+    .newsletter-form__privacy {
+      max-width: 100%;
+    }
+    .newsletter__note {
+      max-width: 100%;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:sections.newsletter.name",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "t:labels.eyebrow",
+      "default": "Newsletter"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "t:labels.title",
+      "default": "Dolci novità, in anticipo"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "t:labels.subtitle",
+      "default": "Iscriviti per ricevere le ultime creazioni, stagionalità e offerte esclusive."
+    },
+    {
+      "type": "text",
+      "id": "placeholder",
+      "label": "t:labels.email_placeholder",
+      "default": "La tua email"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "t:labels.button",
+      "default": "Iscriviti"
+    },
+    {
+      "type": "text",
+      "id": "privacy_label",
+      "label": "t:labels.privacy_label",
+      "info": "t:labels.privacy_label_info",
+      "default": "Ho letto e accetto la Privacy Policy"
+    },
+    {
+      "type": "url",
+      "id": "privacy_url",
+      "label": "t:labels.privacy_url"
+    },
+    {
+      "type": "text",
+      "id": "privacy_note",
+      "label": "t:labels.privacy_note",
+      "default": "Nessuno spam. Puoi cancellarti in qualsiasi momento."
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.newsletter.name"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,165 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin language editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "general": {
+    "404": "Not found",
+    "article": "Article",
+    "block": "Block",
+    "blog": "Blog",
+    "cart": "Cart",
+    "collection": "Collection",
+    "collections": "Collections",
+    "collection_card": "Collection card",
+    "collections_grid": "Collections grid",
+    "colors": "Colors",
+    "column": "Column",
+    "content": "Content",
+    "custom_section": "Custom section",
+    "fonts": "Fonts",
+    "footer": "Footer",
+    "group": "Group",
+    "header": "Header",
+    "layout": "Layout",
+    "main": "Main",
+    "page": "Page",
+    "password": "Password",
+    "primary": "Primary",
+    "product": "Product",
+    "row": "Row",
+    "search": "Search",
+    "secondary": "Secondary",
+    "section": "Section",
+    "settings": "Settings",
+    "sidebar": "Sidebar",
+    "text": "Text",
+    "theme": "Theme",
+    "typography": "Typography"
+  },
+  "sections": {
+    "header": { "name": "Header" },
+    "footer": { "name": "Footer" },
+    "hero": { "name": "Hero Banner" },
+    "featured_collection": { "name": "Featured Collection" },
+    "story": { "name": "Brand Story" },
+    "services": { "name": "Services Grid" },
+    "newsletter": { "name": "Newsletter" },
+    "catering": { "name": "Catering" },
+    "events": { "name": "Events" },
+    "booking": { "name": "Booking" },
+    "product": { "name": "Product" },
+    "product_grid": { "name": "Product Grid" }
+  },
+  "blocks": {
+    "slide": { "name": "Slide" },
+    "service": { "name": "Service card" },
+    "highlight": { "name": "Highlight stat" },
+    "event_type": { "name": "Event type" }
+  },
+  "labels": {
+    "alignment": "Alignment",
+    "background": "Background",
+    "foreground": "Foreground",
+    "grid_gap": "Grid spacing",
+    "grid_item_width": "Grid item width",
+    "input_corner_radius": "Input corner radius",
+    "layout_direction": "Layout direction",
+    "menu": "Menu",
+    "menu_left": "Left navigation menu",
+    "menu_right": "Right navigation menu",
+    "menu_shop": "Shop menu",
+    "menu_services": "Services menu",
+    "menu_legal": "Legal menu",
+    "customer_account_menu": "Customer account menu",
+    "padding": "Padding",
+    "page_margin": "Page margin",
+    "page_width": "Page width",
+    "show_payment_icons": "Show payment icons",
+    "text_style": "Text style",
+    "text": "Text",
+    "logo": "Logo",
+    "tagline": "Tagline",
+    "favicon": "Favicon",
+    "description": "Description",
+    "address": "Address",
+    "phone": "Phone number",
+    "email": "Email address",
+    "instagram": "Instagram URL",
+    "facebook": "Facebook URL",
+    "image": "Image",
+    "eyebrow": "Eyebrow text",
+    "title": "Title",
+    "subtitle": "Subtitle",
+    "cta_label": "Button label",
+    "cta_url": "Button URL",
+    "link": "Link URL",
+    "show_scroll": "Show scroll indicator",
+    "overlay_opacity": "Image overlay opacity",
+    "collection": "Collection",
+    "products_count": "Number of products",
+    "columns": "Columns",
+    "show_cta": "Show CTA button",
+    "image_position": "Image position",
+    "signature": "Signature text",
+    "email_placeholder": "Email placeholder",
+    "button": "Button label",
+    "privacy_note": "Privacy note",
+    "show_filters": "Show filters",
+    "hours": "Opening hours",
+    "number": "Number / Stat",
+    "label": "Label",
+    "logo_max_width": "Logo max width",
+    "sticky_header": "Sticky header",
+    "show_search": "Show search icon",
+    "show_account": "Show account icon",
+    "privacy_label": "Privacy checkbox label",
+    "privacy_label_info": "Write \"Privacy Policy\" in the text to automatically link it to the page set below",
+    "privacy_url": "Privacy Policy page URL",
+    "max_height": "Max height",
+    "autoplay": "Autoplay",
+    "autoplay_speed": "Autoplay speed",
+    "show_dots": "Show dot navigation",
+    "show_arrows": "Show arrows"
+  },
+  "options": {
+    "alignment": {
+      "left": "Left",
+      "center": "Center",
+      "right": "Right"
+    },
+    "direction": {
+      "horizontal": "Horizontal",
+      "vertical": "Vertical"
+    },
+    "page_width": {
+      "narrow": "Narrow",
+      "wide": "Wide"
+    },
+    "size": {
+      "large": "Large",
+      "small": "Small"
+    },
+    "text_style": {
+      "title": "Title",
+      "subtitle": "Subtitle",
+      "normal": "Normal text"
+    },
+    "white": "White",
+    "soft": "Soft beige",
+    "left": "Left",
+    "right": "Right"
+  },
+  "headers": {
+    "hero": "Hero section",
+    "content": "Content section",
+    "logo": "Logo",
+    "navigation": "Navigation",
+    "behaviour": "Behaviour"
+  }
+}

@@ -1,0 +1,199 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "hero": {
+      "type": "hero-banner",
+      "blocks": {
+        "slide_FXaFif": {
+          "type": "slide",
+          "settings": {
+            "overlay_opacity": 35,
+            "eyebrow": "PASTICCERIA ARTIGIANALE",
+            "title": "L'arte della pasticceridawdfaa 2",
+            "subtitle": "Dolci artigianali creati con ingredienti selezionati e passione autentica.",
+            "cta_label": "",
+            "cta_url": ""
+          }
+        },
+        "slide_cicTUW": {
+          "type": "slide",
+          "settings": {
+            "overlay_opacity": 35,
+            "eyebrow": "PASTICCERIA ARTIGIANALE",
+            "title": "L'arte della pasticceria",
+            "subtitle": "Dolci artigianali creati con ingredienti selezionati e passione autentica.",
+            "cta_label": "",
+            "cta_url": ""
+          }
+        }
+      },
+      "block_order": [
+        "slide_FXaFif",
+        "slide_cicTUW"
+      ],
+      "settings": {
+        "max_height": 90,
+        "autoplay": true,
+        "autoplay_speed": 5,
+        "show_dots": true,
+        "show_arrows": true,
+        "show_scroll": true
+      }
+    },
+    "story": {
+      "type": "story",
+      "settings": {
+        "image_position": "right",
+        "eyebrow": "La nostra storia",
+        "title": "Una passione di famiglia",
+        "text": "<p>Da oltre trent'anni la nostra pasticceria crea dolci con ingredienti autentici, lievitazioni naturali e una cura artigianale tramandata di generazione in generazione.</p><p>Ogni prodotto nasce da ricette originali, perfezionate nel tempo, per offrire un'esperienza di gusto genuina e raffinata.</p>",
+        "signature": "Domenico Leone",
+        "cta_label": "Chi siamo",
+        "cta_url": "",
+        "background": "section--soft"
+      }
+    },
+    "booking_FRwbUg": {
+      "type": "booking",
+      "name": "t:sections.booking.name",
+      "settings": {
+        "eyebrow": "Prenotazioni",
+        "hero_title": "Prenota il tuo evento",
+        "hero_subtitle": "Contattaci per pianificare insieme il tuo evento dolce.",
+        "info_eyebrow": "Come funziona",
+        "info_title": "Parliamoci",
+        "info_text": "<p>Compila il modulo e ti contatteremo entro 24 ore per discutere ogni dettaglio del tuo evento.</p>",
+        "hours": "Lun–Sab: 8:00–19:00 / Dom: 9:00–13:00",
+        "address": "",
+        "button_label": "Invia richiesta"
+      }
+    },
+    "catering_y9Hhqr": {
+      "type": "catering",
+      "blocks": {
+        "highlight_RtddNK": {
+          "type": "highlight",
+          "settings": {
+            "number": "500+",
+            "label": "eventi realizzati"
+          }
+        },
+        "highlight_xLhmG6": {
+          "type": "highlight",
+          "settings": {
+            "number": "15+",
+            "label": "anni di esperienza"
+          }
+        },
+        "highlight_kRyPXN": {
+          "type": "highlight",
+          "settings": {
+            "number": "100%",
+            "label": "ingredienti italiani"
+          }
+        }
+      },
+      "block_order": [
+        "highlight_RtddNK",
+        "highlight_xLhmG6",
+        "highlight_kRyPXN"
+      ],
+      "name": "t:sections.catering.name",
+      "settings": {
+        "eyebrow": "Servizio catering",
+        "hero_title": "Dolci per ogni occasione",
+        "hero_subtitle": "Offriamo un servizio catering di alta pasticceria per eventi aziendali, matrimoni e ricevimenti privati.",
+        "content_eyebrow": "Il nostro approccio",
+        "content_title": "Un'esperienza su misura",
+        "content_text": "<p>Ogni evento è unico. Lavoriamo a stretto contatto con i nostri clienti per creare menu di pasticceria personalizzati, dalla degustazione alla consegna.</p>",
+        "cta_label": "Richiedi un preventivo",
+        "cta_url": ""
+      }
+    },
+    "featured": {
+      "type": "featured-collection",
+      "settings": {
+        "collection": "",
+        "eyebrow": "I nostri prodotti",
+        "title": "Pasticceria Secca",
+        "description": "",
+        "products_count": 4,
+        "columns": "4",
+        "background": "",
+        "show_cta": true,
+        "cta_label": "Vedi tutta la collezione"
+      }
+    },
+    "services": {
+      "type": "services-grid",
+      "blocks": {
+        "service_3znDDR": {
+          "type": "service",
+          "settings": {
+            "title": "",
+            "description": "",
+            "cta_label": "",
+            "url": ""
+          }
+        },
+        "service_tXDhTy": {
+          "type": "service",
+          "settings": {
+            "title": "",
+            "description": "",
+            "cta_label": "",
+            "url": ""
+          }
+        },
+        "service_TEfPip": {
+          "type": "service",
+          "settings": {
+            "title": "",
+            "description": "",
+            "cta_label": "",
+            "url": ""
+          }
+        }
+      },
+      "block_order": [
+        "service_3znDDR",
+        "service_tXDhTy",
+        "service_TEfPip"
+      ],
+      "settings": {
+        "eyebrow": "le nostre realizzazioni",
+        "title": "Molto più di una pasticceria"
+      }
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "settings": {
+        "eyebrow": "Newsletter",
+        "title": "Dolci novità, in anticipo",
+        "subtitle": "Iscriviti per ricevere le ultime creazioni, stagionalità e offerte esclusive.",
+        "placeholder": "La tua email",
+        "button_label": "Iscriviti",
+        "privacy_label": "Ho letto e accetto la Privacy Policy",
+        "privacy_url": "",
+        "privacy_note": "Nessuno spam. Puoi cancellarti in qualsiasi momento."
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "story",
+    "booking_FRwbUg",
+    "catering_y9Hhqr",
+    "featured",
+    "services",
+    "newsletter"
+  ]
+}

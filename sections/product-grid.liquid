@@ -1,0 +1,110 @@
+{% doc %}
+  Full collection grid section — used on the collection page with filters.
+
+  @example
+  {% section 'product-grid' %}
+{% enddoc %}
+
+{%- liquid
+  assign cols_class = 'products-grid--' | append: section.settings.columns
+-%}
+
+<section class="collection-page">
+  <div class="container">
+
+    <!-- Collection header -->
+    <div class="collection-header fade-in">
+      {%- if collection.image -%}
+        <div style="margin-bottom:2rem;height:300px;overflow:hidden">
+          <img
+            src="{{ collection.image | image_url: width: 1600 }}"
+            alt="{{ collection.image.alt | default: collection.title | escape }}"
+            style="width:100%;height:100%;object-fit:cover"
+            loading="eager"
+          >
+        </div>
+      {%- endif -%}
+      <span class="eyebrow">{{ 'collection.eyebrow' | t }}</span>
+      <h1>{{ collection.title }}</h1>
+      {%- if collection.description != blank -%}
+        <p style="color:var(--color-text-muted);margin-top:1rem;max-width:60ch;margin-inline:auto;font-size:.9rem">
+          {{ collection.description }}
+        </p>
+      {%- endif -%}
+    </div>
+
+    <!-- Filters & sort -->
+    {%- if section.settings.show_filters -%}
+      <div class="collection-filters fade-in">
+        <div class="filter-tags">
+          <a href="{{ collection.url }}" class="filter-tag {% unless current_tags %}active{% endunless %}">
+            {{ 'collection.all' | t }}
+          </a>
+          {%- for tag in collection.all_tags -%}
+            {%- if current_tags contains tag -%}
+              <a href="{{ tag | link_to_remove_tag: tag | split: 'href="' | last | split: '"' | first }}" class="filter-tag active">
+                {{ tag }}
+              </a>
+            {%- else -%}
+              {{ tag | link_to_tag: tag | replace: '<a ', '<a class="filter-tag" ' }}
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+        <select class="sort-select" onchange="window.location = this.value" aria-label="{{ 'collection.sort' | t }}">
+          {%- for option in collection.sort_options -%}
+            <option
+              value="{{ collection.url }}?sort_by={{ option.value }}"
+              {% if collection.sort_by == option.value %}selected{% endif %}
+            >
+              {{ option.name }}
+            </option>
+          {%- endfor -%}
+        </select>
+      </div>
+    {%- endif -%}
+
+    <!-- Product grid -->
+    <div class="products-grid {{ cols_class }}">
+      {%- for product in collection.products -%}
+        {% render 'product-card', product: product %}
+      {%- else -%}
+        <p style="grid-column:1/-1;text-align:center;color:var(--color-text-muted);padding:4rem 0">
+          {{ 'collection.empty' | t }}
+        </p>
+      {%- endfor -%}
+    </div>
+
+    <!-- Pagination -->
+    {%- if paginate.pages > 1 -%}
+      <div style="text-align:center;margin-top:3rem">
+        {{ paginate | default_pagination }}
+      </div>
+    {%- endif -%}
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "t:sections.product_grid.name",
+  "settings": [
+    {
+      "type": "select",
+      "id": "columns",
+      "label": "t:labels.columns",
+      "options": [
+        { "value": "2", "label": "2" },
+        { "value": "3", "label": "3" },
+        { "value": "4", "label": "4" }
+      ],
+      "default": "3"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_filters",
+      "label": "t:labels.show_filters",
+      "default": true
+    }
+  ]
+}
+{% endschema %}

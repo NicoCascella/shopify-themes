@@ -1,0 +1,51 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "catering": {
+      "type": "catering",
+      "blocks": {
+        "h1": {
+          "type": "highlight",
+          "settings": {
+            "number": "500+",
+            "label": "eventi realizzati"
+          }
+        },
+        "h2": {
+          "type": "highlight",
+          "settings": {
+            "number": "15+",
+            "label": "anni di esperienza"
+          }
+        },
+        "h3": {
+          "type": "highlight",
+          "settings": {
+            "number": "100%",
+            "label": "ingredienti italiani"
+          }
+        }
+      },
+      "settings": {
+        "eyebrow": "Servizio catering",
+        "hero_title": "Dolci per ogni occasione",
+        "hero_subtitle": "Offriamo un servizio di alta pasticceria per eventi aziendali, matrimoni e ricevimenti privati.",
+        "content_eyebrow": "Il nostro approccio",
+        "content_title": "Un'esperienza su misura",
+        "content_text": "<p>Ogni evento è unico. Lavoriamo a stretto contatto con i nostri clienti per creare menu di pasticceria personalizzati, dalla degustazione alla consegna.</p>",
+        "cta_label": "Richiedi un preventivo"
+      }
+    }
+  },
+  "order": [
+    "catering"
+  ]
+}

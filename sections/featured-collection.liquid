@@ -1,0 +1,132 @@
+{% doc %}
+  Featured products grid from a selected collection.
+  Supports 2-4 columns, configurable product count, and a section header.
+
+  @example
+  {% section 'featured-collection' %}
+{% enddoc %}
+
+{%- liquid
+  assign collection = collections[section.settings.collection]
+  assign cols_class = 'products-grid--' | append: section.settings.columns
+-%}
+
+<section class="featured-products section {{ section.settings.background }}">
+  <div class="container">
+
+    <div class="section-header section-header--center fade-in">
+      {%- if section.settings.eyebrow != blank -%}
+        <span class="eyebrow">{{ section.settings.eyebrow }}</span>
+      {%- endif -%}
+      {%- if section.settings.title != blank -%}
+        <h2>{{ section.settings.title }}</h2>
+      {%- endif -%}
+      <div class="section-divider"></div>
+      {%- if section.settings.description != blank -%}
+        <p style="color:var(--color-text-muted);margin-inline:auto">{{ section.settings.description }}</p>
+      {%- endif -%}
+    </div>
+
+    <div class="products-grid {{ cols_class }}">
+      {%- for product in collection.products limit: section.settings.products_count -%}
+        {% render 'product-card', product: product %}
+      {%- else -%}
+        {%- for i in (1..section.settings.products_count) -%}
+          <div class="product-card">
+            <div class="product-card__media">{{ 'product-' | append: i | placeholder_svg_tag }}</div>
+            <div class="product-card__info">
+              <p class="product-card__title">Prodotto di esempio</p>
+              <p class="product-card__price">{{ 1200 | money }}</p>
+            </div>
+          </div>
+        {%- endfor -%}
+      {%- endfor -%}
+    </div>
+
+    {%- if section.settings.show_cta and section.settings.cta_label != blank -%}
+      <div style="text-align:center;margin-top:3rem" class="fade-in">
+        <a href="{{ collection.url | default: routes.collections_url }}" class="btn btn--accent">
+          <span>{{ section.settings.cta_label }}</span>
+        </a>
+      </div>
+    {%- endif -%}
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "t:sections.featured_collection.name",
+  "settings": [
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "t:labels.collection"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "t:labels.eyebrow",
+      "default": "I nostri prodotti"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "t:labels.title",
+      "default": "Selezione del giorno"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "t:labels.description"
+    },
+    {
+      "type": "range",
+      "id": "products_count",
+      "label": "t:labels.products_count",
+      "min": 2,
+      "max": 12,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "select",
+      "id": "columns",
+      "label": "t:labels.columns",
+      "options": [
+        { "value": "2", "label": "2" },
+        { "value": "3", "label": "3" },
+        { "value": "4", "label": "4" }
+      ],
+      "default": "4"
+    },
+    {
+      "type": "select",
+      "id": "background",
+      "label": "t:labels.background",
+      "options": [
+        { "value": "", "label": "t:options.white" },
+        { "value": "section--soft", "label": "t:options.soft" }
+      ],
+      "default": ""
+    },
+    {
+      "type": "checkbox",
+      "id": "show_cta",
+      "label": "t:labels.show_cta",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "t:labels.cta_label",
+      "default": "Vedi tutta la collezione"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.featured_collection.name"
+    }
+  ]
+}
+{% endschema %}
